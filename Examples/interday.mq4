@@ -32,9 +32,13 @@ input double lots = 0.01;
 double lot = lots;
 
 int modify = 300;
+int open_position = 300;
 
-int l = 1, s = 1;
+
 int ml = 1, ms = 1;
+
+bool trade_long = true;
+bool trade_short = true;
 
 
 void OnTick()
@@ -47,15 +51,14 @@ void OnTick()
     double long_position = Low[0];
     double short_position = High[0];
     
-    if( last_tick.ask >= long_position + l*60*Point*Digits) {
+    if( trade_long == true && last_tick.ask >= NormalizeDouble(long_position + open_position*Point,Digits)) {
         OrderSend(Symbol(),OP_BUY,lot,Ask,5,0,0,"Posicion larga abierta", 12345,0, Green);
-        l += 1;
-        
+        trade_long = false;
     }
     
-    if( last_tick.bid <= short_position - s*60*Point*Digits) {
+    if( trade_short == true && last_tick.bid <= NormalizeDouble(short_position - open_position*Point,Digits)) {
         OrderSend(Symbol(),OP_SELL,lot,Bid,5,0,0,"Posicion corta abierta", 12345,0, Blue);
-        s += 1;
+        trade_short = false;
     }
     
     int count;
@@ -82,7 +85,8 @@ void OnTick()
         if (OrderSymbol() == Symbol() && OrderType() == OP_BUY){
             if (TimeHour(TimeCurrent()) <= 1 && TimeMinute(TimeCurrent()) <= 30 ){
                 OrderClose(OrderTicket(),OrderLots(),Bid, 5, Red);
-                l = 1; s = 1; ml = 1; ms = 1;
+                ml = 1; ms = 1;
+                trade_long = true;
             }
         }
         
@@ -90,7 +94,8 @@ void OnTick()
             if (TimeHour(TimeCurrent()) <= 1 && TimeMinute(TimeCurrent()) <= 30) 
             {
                 OrderClose(OrderTicket(),OrderLots(),Ask, 5, Yellow);
-                l = 1; s = 1; ml = 1; ms = 1; 
+                ml = 1; ms = 1; 
+                trade_short = true;
             }
         }
         
