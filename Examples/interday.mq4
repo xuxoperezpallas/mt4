@@ -76,7 +76,7 @@ void OnTick()
         }
         
         if (OrderSymbol() == Symbol() && OrderType() == OP_SELL){
-            if (last_tick.bid >= NormalizeDouble(OrderOpenPrice() - ms*modify*Point, Digits)){
+            if (last_tick.bid <= NormalizeDouble(OrderOpenPrice() - ms*modify*Point, Digits)){
                 OrderModify(OrderTicket(), OrderOpenPrice(), NormalizeDouble(last_tick.bid + modify*Point, Digits),0,0, Yellow);
                 ms += 1;
             }
