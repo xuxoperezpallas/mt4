@@ -31,8 +31,8 @@ void OnDeinit(const int reason)
 input double lots = 0.01;
 double lot = lots;
 
-int modify = 300;
-int open_position = 300;
+int modify = 400;
+int open_position = 400;
 int stop_lost = 400;
 
 
@@ -41,10 +41,12 @@ int ml = 1, ms = 1;
 bool trade_long = false;
 bool trade_short = false;
 
+//datetime today = D'01.01.2004';
 
 void OnTick()
 {
 
+  
     
     MqlTick last_tick;
     SymbolInfoTick(Symbol(), last_tick);
@@ -60,6 +62,19 @@ void OnTick()
     if( trade_short == true && last_tick.bid <= NormalizeDouble(short_position - open_position*Point,Digits)) {
         OrderSend(Symbol(),OP_SELL,lot,Bid,5,NormalizeDouble(last_tick.ask + stop_lost*Point, Digits),0,"Posicion corta abierta", 12345,0, Blue);
         trade_short = false;
+    }
+    
+    static datetime today;
+    
+    
+
+    
+    if (today != iTime (Symbol(), PERIOD_D1, 0)) {
+        today = iTime (Symbol(), PERIOD_D1, 0);
+        ml = 1; ms = 1;
+        trade_long = true;
+        ml = 1; ms = 1; 
+        trade_short = true;
     }
     
     int count;
@@ -83,21 +98,8 @@ void OnTick()
             }
         }
         
-        if (OrderSymbol() == Symbol() && OrderType() == OP_BUY){
-            if (TimeHour(TimeCurrent()) <= 1 && TimeMinute(TimeCurrent()) <= 30 ){
-                OrderClose(OrderTicket(),OrderLots(),Bid, 5, Red);
-                ml = 1; ms = 1;
-                trade_long = true;
-            }
-        }
-        
-        if (OrderSymbol() == Symbol() && OrderType() == OP_SELL){
-            if (TimeHour(TimeCurrent()) <= 1 && TimeMinute(TimeCurrent()) <= 30) 
-            {
-                OrderClose(OrderTicket(),OrderLots(),Ask, 5, Yellow);
-                ml = 1; ms = 1; 
-                trade_short = true;
-            }
+        if (OrderSymbol() == Symbol() && OrderType() == OP_BUY || OrderType() == OP_SELL){
+            
         }
         
         
