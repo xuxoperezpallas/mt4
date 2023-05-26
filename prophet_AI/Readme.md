@@ -14,4 +14,4 @@ https://facebook.github.io/prophet/
 
 6. Cambiar el nombre del archivo de ejemplo, y renombrar el archivo creado a "datos.csv"
 
-7. Ejecutar desde cmd (consola de Windows)  python main.py
+7. Ejecutar desde cmd (consola de Windows)  python3 main.py
