@@ -14,10 +14,12 @@ https://facebook.github.io/prophet/
 
 6. Cambiar el nombre del archivo de ejemplo, y renombrar el archivo creado a "datos.csv"
 
-7. Ejecutar desde cmd (consola de Windows)  python3 main.py
+7. Ejecutar desde cmd (consola de Windows): 
 
-7. Es posible que tambien haya que instalar matplotlib y pyplot. Para ello ejecutamos desde na terminal o desde la consola de windows:
+   7.1 $python3 main.py
 
-   7.1 python3 -m pip install matplotlib
+8. Es posible que tambien haya que instalar matplotlib y pyplot. Para ello ejecutamos desde na terminal o desde la consola de windows:
+
+   8.1 $python3 -m pip install matplotlib
    
-   7.2 python3 -m pip install pyplot
+   8.2 $python3 -m pip install pyplot
