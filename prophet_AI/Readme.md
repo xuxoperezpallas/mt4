@@ -19,4 +19,5 @@ https://facebook.github.io/prophet/
 7. Es posible que tambien haya que instalar matplotlib y pyplot. Para ello ejecutamos desde na terminal o desde la consola de windows:
 
    7.1 python3 -m pip install matplotlib
+   
    7.2 python3 -m pip install pyplot
