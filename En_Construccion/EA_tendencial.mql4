@@ -275,3 +275,5 @@ void reset_sell_buffer(double& storage[][]){
         }
     }
 }
+
+
