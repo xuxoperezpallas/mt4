@@ -39,6 +39,10 @@ double trade_short = open_tick;
 int distancia = 300;
 int stop_loss = 100;
 
+bool trade = true;
+bool _long = true;
+bool _short = true;
+
 void OnTick() {
 
     MqlTick last_tick;
@@ -103,5 +107,147 @@ bool stop_open_positions(double storage_1[][], double storage_2){
             }
         }
     }
+    return trade = true;
 }
 
+bool stop_open_positions_long(){
+    
+    int rango = 80;
+    MqlTick last_tic;
+    SymbolInfoTick(Symbol(), last_tic);
+    
+    for(int i = 0; i <= OrdersTotal(); i++){
+    
+       if(!OrderSelect(i,SELECT_BY_POS,MODE_TRADES)
+           continue;
+           
+       if (OrderSymbol() == Symbol()){
+       
+            if (OrderType() == OP_BUY){
+                if (last_tic.ask <= OrderOpenPrice() +  NormalizeDouble(rango*Point,Digits) &&
+                    last_tic.ask >= OrderOpenPrice() -  NormalizeDouble(rango*Point,Digits)){
+                        return _long = false;
+                }
+                else {
+                   return _long = true;
+                }
+                
+            }
+        }
+    }
+}
+
+bool stop_open_positions_long(){
+    
+    int rango = 80;
+    MqlTick last_tic;
+    SymbolInfoTick(Symbol(), last_tic);
+    
+    for(int i = 0; i <= OrdersTotal(); i++){
+    
+       if(!OrderSelect(i,SELECT_BY_POS,MODE_TRADES)
+           continue;
+           
+       if (OrderSymbol() == Symbol()){
+       
+            if (OrderType() == OP_BUY){
+                if (last_tic.ask <= OrderOpenPrice() +  NormalizeDouble(rango*Point,Digits) &&
+                    last_tic.ask >= OrderOpenPrice() -  NormalizeDouble(rango*Point,Digits)){
+                        return _long = false;
+                }
+                else {
+                   return _long = true;
+                }
+                
+            }
+        }
+    }
+}
+
+bool stop_open_positions_long(){
+    
+    int rango = 80;
+    MqlTick last_tic;
+    SymbolInfoTick(Symbol(), last_tic);
+    
+    for(int i = 0; i <= OrdersTotal(); i++){
+    
+       if(!OrderSelect(i,SELECT_BY_POS,MODE_TRADES)
+           continue;
+           
+       if (OrderSymbol() == Symbol()){
+       
+            if (OrderType() == OP_SELL){
+                if (last_tic.bid <= OrderOpenPrice() +  NormalizeDouble(rango*Point,Digits) &&
+                    last_tic.bid >= OrderOpenPrice() -  NormalizeDouble(rango*Point,Digits)){
+                        return _short = false;
+                }
+                else {
+                   return _short = true;
+                }
+                
+            }
+        }
+    }
+}
+
+
+double[][] storage_buy_buffer(){
+    
+    double storage[][];
+    int rango = 80;
+    MqlTick last_tic;
+    SymbolInfoTick(Symbol(), last_tic);
+    
+    for(int i = 0; i <= OrdersTotal(); i++){
+    
+       if(!OrderSelect(i,SELECT_BY_POS,MODE_TRADES)
+           continue;
+           
+       if (OrderSymbol() == Symbol()){
+       
+            if (OrderType() == OP_BUY){
+                for (int g = 0; g <= 1000; g++){
+                    if (last_tic.ask <= OrderOpenPrice() + NormalizeDouble(rango*Point,Digits) &&
+                        last_tic.ask >= OrderOpenPrice() - NormalizeDouble(rango*Point,Digits)){
+                            storage[0][g] = OrderOpenPrice()                               
+                        }
+                    }
+                 }
+             }
+        }
+    }
+    return storage;   
+}
+
+
+double[][] storage_sell_buffer(double storage_1[][]){
+    
+    double storage[][];
+    int rango = 80;
+    MqlTick last_tic;
+    SymbolInfoTick(Symbol(), last_tic);
+    
+    for(int i = 0; i <= OrdersTotal(); i++){
+    
+       if(!OrderSelect(i,SELECT_BY_POS,MODE_TRADES)
+           continue;
+           
+       if (OrderSymbol() == Symbol()){
+       
+            if (OrderType() == OP_SELL){
+                for (int g = 0; g <= 1000; g++){
+                    if (last_tic.ask <= storage_1[0][g] + NormalizeDouble(rango*Point,Digits) &&
+                        last_tic.ask >= storage_1[0][g] - NormalizeDouble(rango*Point,Digits) &&
+                        last_tic.bid <= OrderOpenPrice() + NormalizeDouble(rango*Point,Digits) &&
+                        last_tic.bid >= OrderOpenPrice() - NormalizeDouble(rango*Point,Digits)){
+                            storage[0][g] = OrderOpenPrice()                               
+                        }
+                    }
+                 }
+             }
+        }
+    }
+    return storage;
+   
+}
