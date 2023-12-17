@@ -58,13 +58,13 @@ void OnTick()
       if (rsi_indicator <= rsi_down)
           rsi_down = rsi_indicator;
           
-      if (rsi_indicator <= 30 && OrdersTotal() == 0 && last_tick.ask >= down + NormalizeDouble(margen*Point, Digits)){
+      if (rsi_indicator <= 35 && OrdersTotal() == 0 && last_tick.ask >= down + NormalizeDouble(margen*Point, Digits)){
           OrderSend(NULL, OP_BUY, lots, Ask, 7,0,0, "Orden de compra abierta", 12345,0, Green);
           down = 100;
       }
       
-      if (rsi_indicator >= 70 && OrdersTotal() == 0 && last_tick.bid >= top - NormalizeDouble(margen*Point, Digits)){
-          OrderSend(NULL, OP_SELL, lots, Bid, 7,0,0, "Orden de ventaa abierta", 12345,0, Green);
+      if (rsi_indicator >= 65 && OrdersTotal() == 0 && last_tick.bid <= top - NormalizeDouble(margen*Point, Digits)){
+          OrderSend(NULL, OP_SELL, lots, Bid, 7,0,0, "Orden de venta abierta", 12345,0, Green);
           top = 0;
       }
       
@@ -75,13 +75,13 @@ void OnTick()
           
           if (OrderSymbol() == Symbol() && OrderType() == OP_BUY)
           {
-               if (last_tick.ask <= top - NormalizeDouble(margen*Point, Digits))
+               if (last_tick.ask >= down + NormalizeDouble(margen*Point, Digits))
                    OrderClose(OrderTicket(), OrderLots(), Bid, Red);
           }
           
           if (OrderSymbol() == Symbol() && OrderType() == OP_SELL)
           {
-               if (last_tick.bid >= down + NormalizeDouble(margen*Point, Digits))
+               if (last_tick.bid <= top - NormalizeDouble(margen*Point, Digits))
                    OrderClose(OrderTicket(), OrderLots(), Ask, Red);
           }
       }
