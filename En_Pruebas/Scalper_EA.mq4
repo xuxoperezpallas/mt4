@@ -48,21 +48,21 @@ void OnTick()
             
       double atr_indicator = iATR(NULL, PERIOD_H1, 1, 0);
       
-      if (atr_indicator >= 0.0014 && last_tick.ask >= top)
+      if (atr_indicator >= 0.0013 && last_tick.ask >= top)
           top = last_tick.ask;
       
-      if (atr_indicator >= 0.0014 && last_tick.bid <= down)
+      if (atr_indicator >= 0.0013 && last_tick.bid <= down)
           down = last_tick.bid;
           
           
-      if (atr_indicator >= 0.0014 && OrdersTotal() == 0 && last_tick.ask <= down + NormalizeDouble(margen_open*Point, Digits)){
+      if (atr_indicator >= 0.0013 && OrdersTotal() == 0 && last_tick.ask <= down + NormalizeDouble(margen_open*Point, Digits)){
           OrderSend(NULL, OP_BUY, lots, Ask, 7,last_tick.ask - NormalizeDouble(stop_loss*Point,Digits),last_tick.ask + NormalizeDouble(take_prifit*Point,Digits), "Orden de compra abierta", 12345,0, Green);
           Print("down: " + down);
           top = 0;
           down = 10000;
       }
       
-      if (atr_indicator >= 0.0014 && OrdersTotal() == 0 && last_tick.bid >= top - NormalizeDouble(margen_open*Point, Digits)){
+      if (atr_indicator >= 0.0013 && OrdersTotal() == 0 && last_tick.bid >= top - NormalizeDouble(margen_open*Point, Digits)){
           OrderSend(NULL, OP_SELL, lots, Bid, 7,last_tick.bid + NormalizeDouble(stop_loss*Point,Digits),last_tick.bid - NormalizeDouble(take_prifit*Point,Digits), "Orden de venta abierta", 12345,0, Green);
           Print ("top: " + top);
           top = 0;
