@@ -80,13 +80,13 @@ void OnTick()
           
           if (OrderSymbol() == Symbol() && OrderType() == OP_BUY)
           {
-               if (last_tick.ask >= down + NormalizeDouble(margen_close*Point, Digits))
+               if (last_tick.ask <= top - NormalizeDouble(margen_close*Point, Digits))
                    OrderClose(OrderTicket(), OrderLots(), Bid, Red);
           }
           
           if (OrderSymbol() == Symbol() && OrderType() == OP_SELL)
           {
-               if (last_tick.bid <= top - NormalizeDouble(margen_close*Point, Digits))
+               if (last_tick.bid >= down + NormalizeDouble(margen_close*Point, Digits))
                    OrderClose(OrderTicket(), OrderLots(), Ask, Red);
           }
       }*/
