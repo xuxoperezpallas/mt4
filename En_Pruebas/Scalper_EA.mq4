@@ -36,7 +36,8 @@ double down = 10000;
 
 bool trade = false;
 
-input int margen_open = 50;
+int margen_open = 50;
+
 input int margen_close = 100;
 input int take_prifit = 135;
 input int stop_loss = 90;
