@@ -36,11 +36,11 @@ double down = 10000;
 
 bool trade = false;
 
-int margen_open = 50;
+int margen_open = 90;
 
 input int margen_close = 100;
-input int take_prifit = 135;
-input int stop_loss = 90;
+input int take_prifit = 100;
+input int stop_loss = 100;
 
 void OnTick()
   {
@@ -73,7 +73,7 @@ void OnTick()
           down = 10000;
       }
       
-   /*   for (int i = 0; i < OrdersTotal(); i++)
+      for (int i = 0; i < OrdersTotal(); i++)
       {
           if (!OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
               continue;
@@ -89,7 +89,7 @@ void OnTick()
                if (last_tick.bid >= down + NormalizeDouble(margen_close*Point, Digits))
                    OrderClose(OrderTicket(), OrderLots(), Ask, Red);
           }
-      }*/
+      }
    
   }
 //+------------------------------------------------------------------+
