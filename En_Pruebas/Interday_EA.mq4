@@ -46,6 +46,16 @@ void OnTick()
   {
       MqlTick last_tick;
       SymbolInfoTick(NULL,last_tick);
+      int day = DayOfWeek();
+      
+      int h = TimeHour(TimeCurrent());
+      
+      if ( day == 0 && h > 23 && day == 1 && h < 2) 
+          trade = false;
+      
+      else {
+          trade = true;
+      }
             
       double atr_indicator = iATR(NULL, PERIOD_H1, 1, 0);
       
