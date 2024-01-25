@@ -69,14 +69,14 @@ void OnTick()
       Print("down: " + down);
           
           
-      if (atr_indicator >= 0.0013 && OrdersTotal() == 0 && last_tick.ask >= down + NormalizeDouble(margen_open*Point, Digits)){
+      if (trade == true && atr_indicator >= 0.0013 && OrdersTotal() == 0 && last_tick.ask >= down + NormalizeDouble(margen_open*Point, Digits)){
           OrderSend(NULL, OP_BUY, lots, Ask, 7,last_tick.ask - NormalizeDouble(stop_loss*Point,Digits),last_tick.ask + NormalizeDouble(take_prifit*Point,Digits), "Orden de compra abierta", 12345,0, Green);
           Print("down: " + down);
           top = 0;
           down = 10000;
       }
       
-      if (atr_indicator >= 0.0013 && OrdersTotal() == 0 && last_tick.bid <= top - NormalizeDouble(margen_open*Point, Digits)){
+      if (trade == true && atr_indicator >= 0.0013 && OrdersTotal() == 0 && last_tick.bid <= top - NormalizeDouble(margen_open*Point, Digits)){
           OrderSend(NULL, OP_SELL, lots, Bid, 7,last_tick.bid + NormalizeDouble(stop_loss*Point,Digits),last_tick.bid - NormalizeDouble(take_prifit*Point,Digits), "Orden de venta abierta", 12345,0, Green);
           Print ("top: " + top);
           top = 0;
