@@ -1,1 +1,0 @@
-El EA_tendencial-2.0 es una mejora del EA_tendencial ambos se pueden probar en meta trader 4 en el rango de tiempo H1 del grafico. De todas maneras aun no he tendio tiempo de probarlo en modo real si en el probador de estrategias pero no en todas las divisas solo EUR/USD.
