@@ -31,8 +31,9 @@ void OnDeinit(const int reason)
 
 input double lots = 0.01;
 
-int margen = 300;
-int margen_cierre = 150;
+int margen = 350;
+int margen_cierre = 100;
+int stop_loss = 1000;
 
 bool cierre_venta = false;
 bool cierre_compra = false;
@@ -50,7 +51,7 @@ void OnTick()
       SymbolInfoTick(Symbol(), last_tick);          
           
       if (last_tick.ask >= constante_compra + NormalizeDouble(margen*Point,Digits)){
-          OrderSend(NULL, OP_BUY, lots, Ask, 7,0,0, "Orden de compra abierta", 12345,0, Green);
+          OrderSend(NULL, OP_BUY, lots, Ask, 7,NormalizeDouble(stop_loss*Point,Digits),0, "Orden de compra abierta", 12345,0, Green);
           Print ("+++++++++++++++++++++++++++++++++++++++++++++++++++");
           constante_compra += NormalizeDouble(margen*Point,Digits);
           Print("Constante de compra = " +  constante_compra);
@@ -58,11 +59,11 @@ void OnTick()
       }
       
       if (last_tick.bid <= constante_venta -  NormalizeDouble(margen*Point,Digits)){
-          OrderSend(NULL, OP_SELL, lots, Bid, 7,0,0, "Orden de venta abierta", 12345,0, Green);
+          OrderSend(NULL, OP_SELL, lots, Bid, 7,NormalizeDouble(stop_loss*Point,Digits),0, "Orden de venta abierta", 12345,0, Green);
           Print ("---------------------------------------------------");
           constante_venta -= NormalizeDouble(margen*Point,Digits);
           Print("Constante de venta = " +  constante_venta);
-          constante_compra = constante_compra;
+          constante_compra = constante_venta;
       }
       
       for (int i = 0; i < OrdersTotal(); i++)
