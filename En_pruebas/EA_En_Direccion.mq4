@@ -111,7 +111,7 @@ bool IsPositionWithinRange(double price) {
         }
       if (!OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            continue;
-               if (OrderSymbol() = Symbol() OrderType() == OP_BUY) {
+               if (OrderSymbol() = Symbol() && OrderType() == OP_BUY) {
                      double orderOpenPrice = OrderOpenPrice();
                      // Verificar si el precio de apertura de la posición está dentro del rango
                      if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
