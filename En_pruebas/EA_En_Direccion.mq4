@@ -82,8 +82,9 @@ void OnTick()
                   int margen_4 = margen_2 * i;
                   if (last_tick.bid > OrderOpenPrice() + NormalizeDouble(margen_3*Point,Digits)) {
                       OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() + NormalizeDouble(margen_margen_4*Point,Digits),0,0, Red);
-                      constante_venta = last_tick.bid;
                   }
+                  if (last_tick.bid > OrderOpenPrice() + NormalizeDouble(margen_4*Point,Digits)) 
+                  constante_venta = last_tick.bid;
               }
           }
           
@@ -98,11 +99,13 @@ void OnTick()
                   if (last_tick.bid < OrderOpenPrice() - NormalizeDouble(margen_3*Point,Digits)) {
                       OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() - NormalizeDouble(margen_4*Point,Digits),0,0, Red);
                       constante_compra = last_tick.ask;
-              }
+                      }
+                   if (last_tick.ask < OrderOpenPrice() - NormalizeDouble(margen_4*Point,Digits))
+                      constante_compra = last_tick.ask;
+                }   
           }
-      }
    
-  }
+}
 
 
 
