@@ -40,7 +40,7 @@ bool cierre_compra = false;
 
 double primer_constante = Close[1];
 
-int margen_2 = 1500;
+int margen_2 = 500;
 
 double constante_compra = primer_constante - NormalizeDouble(margen_cierre*Point,Digits);
 double constante_venta = primer_constante + NormalizeDouble(margen_cierre*Point,Digits);
@@ -58,17 +58,27 @@ void OnTick()
               Print ("+++++++++++++++++++++++++++++++++++++++++++++++++++");
               constante_compra += NormalizeDouble(margen*Point,Digits);
               Print("Constante de compra = " +  constante_compra);
-              constante_venta = constante_compra;
+          }
+          
+          if (last_tick.ask >= constante_venta + NormalizeDouble(margen*Point,Digits)){
+              Print ("#######################################################");
+              constante_venta += NormalizeDouble(margen*Point,Digits);
+              Print("Constante de compra = " +  constante_enta);
           }
 
 
 
           if (last_tick.bid <= constante_venta -  NormalizeDouble(margen*Point,Digits)){
-              OrderSend(NULL, OP_SELL, lots, Bid, 7,NormalizeDouble(stop_loss*Point,Digits),0, "Orden de venta abierta", 12345,0, Green);
+              OrderSend(NULL, OP_SELL, lots, Bid, 7,NormalizeDoule(stop_loss*Point,Digits),0, "Orden de venta abierta", 12345,0, Green);
               Print ("---------------------------------------------------");
               constante_venta -= NormalizeDouble(margen*Point,Digits);
               Print("Constante de venta = " +  constante_venta);
-              constante_compra = constante_venta;
+          }
+
+          if (last_tick.bid <= constante_compra -  NormalizeDouble(margen*Point,Digits)){
+              Print ("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+              constante_compra -= NormalizeDouble(margen*Point,Digits);
+              Print("Constante de venta = " +  constante_compra);
           }
 
       
