@@ -31,7 +31,7 @@ void OnDeinit(const int reason)
 
 input double lots = 0.01;
 
-int margen = 350;
+int margen = 400;
 int margen_cierre = 100;
 int stop_loss = 1000;
 
@@ -39,7 +39,9 @@ bool cierre_venta = false;
 bool cierre_compra = false;
 
 double primer_constante = Close[1];
-int upper = 65;
+
+int upper = 150;
+int margen_2 = 3000;
 
 double constante_compra = primer_constante - NormalizeDouble(margen_cierre*Point,Digits);
 double constante_venta = primer_constante + NormalizeDouble(margen_cierre*Point,Digits);
@@ -81,11 +83,17 @@ void OnTick()
               if (last_tick.bid > OrderOpenPrice() + NormalizeDouble(margen*Point,Digits)) {
                   OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() + NormalizeDouble(margen_cierre*Point,Digits),0,0, Red);
               }
+              if (last_tick.bid > OrderOpenPrice() + NormalizeDouble(margen_2*Point,Digits)) {
+                  OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() + NormalizeDouble(margen_cierre*Point,Digits),0,0, Red);
+              }
           }
           
           if (OrderSymbol() == Symbol() && OrderType() == OP_SELL)
           {
               if (last_tick.bid < OrderOpenPrice() - NormalizeDouble(margen*Point,Digits)) {
+                  OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() - NormalizeDouble(margen_cierre*Point,Digits),0,0, Red);
+              }
+              if (last_tick.bid < OrderOpenPrice() - NormalizeDouble(margen_2*Point,Digits)) {
                   OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() - NormalizeDouble(margen_cierre*Point,Digits),0,0, Red);
               }
           }
@@ -101,24 +109,20 @@ bool IsPositionWithinRange(double price) {
     for (int i = 0; i < OrdersTotal(); i++) {
         if (!OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            continue;
-               if (OrderSymbol() == Symbol() && OrderType() == OP_SELL) {
-                     double orderOpenPrice = OrderOpenPrice();
-                     // Verificar si el precio de apertura de la posición está dentro del rango
-                     if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
-                     return true; // Hay una posición dentro del rango
-                     }
-              }
+        if (OrderSymbol() == Symbol() && OrderType() == OP_SELL) {
+             double orderOpenPrice = OrderOpenPrice();
+             // Verificar si el precio de apertura de la posición está dentro del rango
+             if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
+             return true; // Hay una posición dentro del rango
+             }
         }
-      if (!OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-           continue;
-               if (OrderSymbol() = Symbol() && OrderType() == OP_BUY) {
-                     double orderOpenPrice = OrderOpenPrice();
-                     // Verificar si el precio de apertura de la posición está dentro del rango
-                     if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
-                     return true; // Hay una posición dentro del rango
-                     }
-              }
-        }
+        if (OrderSymbol() = Symbol() && OrderType() == OP_BUY) {
+              double orderOpenPrice = OrderOpenPrice();
+              // Verificar si el precio de apertura de la posición está dentro del rango
+              if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
+              return true; // Hay una posición dentro del rango
+             }
+         }
     }
     return false; // No hay ninguna posición dentro del rango
 }
