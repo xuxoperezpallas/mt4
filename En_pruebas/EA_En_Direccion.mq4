@@ -40,7 +40,7 @@ bool cierre_compra = false;
 
 double primer_constante = Close[1];
 
-int margen_2 = 500;
+int margen_2 = 300;
 
 double constante_compra = primer_constante - NormalizeDouble(margen_cierre*Point,Digits);
 double constante_venta = primer_constante + NormalizeDouble(margen_cierre*Point,Digits);
