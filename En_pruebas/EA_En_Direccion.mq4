@@ -107,22 +107,22 @@ bool IsPositionWithinRange(double price) {
 
     // Iterar sobre todas las posiciones abiertas
     for (int i = 0; i < OrdersTotal(); i++) {
-        if (!OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-           continue;
-        if (OrderSymbol() == Symbol() && OrderType() == OP_SELL) {
-             double orderOpenPrice = OrderOpenPrice();
-             // Verificar si el precio de apertura de la posición está dentro del rango
-             if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
-             return true; // Hay una posición dentro del rango
-             }
+        if (OrderSelect(i, SELECT_BY_POS, MODE_TRADES)) {
+            if (OrderSymbol() == Symbol() && OrderType() == OP_SELL) {
+                double orderOpenPrice = OrderOpenPrice();
+                // Verificar si el precio de apertura de la posición está dentro del rango
+                if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
+                return true; // Hay una posición dentro del rango
+                }
+            }
+            if (OrderSymbol() = Symbol() && OrderType() == OP_BUY) {
+                double orderOpenPrice = OrderOpenPrice();
+                // Verificar si el precio de apertura de la posición está dentro del rango
+                if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
+                return true; // Hay una posición dentro del rango
+                }
+            }
         }
-        if (OrderSymbol() = Symbol() && OrderType() == OP_BUY) {
-              double orderOpenPrice = OrderOpenPrice();
-              // Verificar si el precio de apertura de la posición está dentro del rango
-              if (orderOpenPrice >= lowerLimit && orderOpenPrice <= upperLimit) {
-              return true; // Hay una posición dentro del rango
-             }
-         }
     }
     return false; // No hay ninguna posición dentro del rango
 }
