@@ -63,7 +63,7 @@ void OnTick()
           if (last_tick.ask >= constante_venta + NormalizeDouble(margen*Point,Digits)){
               Print ("#######################################################");
               constante_venta += NormalizeDouble(margen*Point,Digits);
-              Print("Constante de compra = " +  constante_enta);
+              Print("Constante de venta = " +  constante_enta);
           }
 
 
@@ -78,7 +78,7 @@ void OnTick()
           if (last_tick.bid <= constante_compra -  NormalizeDouble(margen*Point,Digits)){
               Print ("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
               constante_compra -= NormalizeDouble(margen*Point,Digits);
-              Print("Constante de venta = " +  constante_compra);
+              Print("Constante de compra = " +  constante_compra);
           }
 
       
