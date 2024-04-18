@@ -31,7 +31,7 @@ void OnDeinit(const int reason)
 
 input double lots = 0.01;
 
-int margen = 300;
+int margen = 400;
 int margen_cierre = 150;
 int stop_loss = 1000;
 
@@ -39,8 +39,6 @@ bool cierre_venta = false;
 bool cierre_compra = false;
 
 double primer_constante = Close[1];
-
-int margen_2 = 1000;
 
 double constante_compra = primer_constante - NormalizeDouble(margen_cierre*Point,Digits);
 double constante_venta = primer_constante + NormalizeDouble(margen_cierre*Point,Digits);
@@ -58,6 +56,7 @@ void OnTick()
               Print ("+++++++++++++++++++++++++++++++++++++++++++++++++++");
               constante_compra += NormalizeDouble(margen*Point,Digits);
               Print("Constante de compra = " +  constante_compra);
+              constante_venta = constante_compra;
           }
 
           if (last_tick.bid <= constante_venta -  NormalizeDouble(margen*Point,Digits)){
@@ -65,6 +64,7 @@ void OnTick()
               Print ("---------------------------------------------------");
               constante_venta -= NormalizeDouble(margen*Point,Digits);
               Print("Constante de venta = " +  constante_venta);
+              constante_compra = constante_venta;
           }
       
       for (int i = 0; i < OrdersTotal(); i++)
@@ -76,35 +76,15 @@ void OnTick()
           {    
               if (last_tick.bid > OrderOpenPrice() + NormalizeDouble(margen*Point,Digits)) {
                   OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() + NormalizeDouble(margen_cierre*Point,Digits),0,0, Red);
-              }
-              for (int i = 1; i <= 30; i++) {
-                  int margen_3 = margen_2 * (i +1);
-                  int margen_4 = margen_2 * i;
-                  if (last_tick.bid > OrderOpenPrice() + NormalizeDouble(margen_3*Point,Digits)) {
-                      OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() + NormalizeDouble(margen_margen_4*Point,Digits),0,0, Red);
-                  }
-                  if (last_tick.bid > OrderOpenPrice() + NormalizeDouble(margen_4*Point,Digits)) 
-                  constante_venta = last_tick.bid;
-              }
+              }              
           }
           
           if (OrderSymbol() == Symbol() && OrderType() == OP_SELL)
           {
               if (last_tick.bid < OrderOpenPrice() - NormalizeDouble(margen*Point,Digits)) {
                   OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() - NormalizeDouble(margen_cierre*Point,Digits),0,0, Red);
-              }
-              for (int i = 1; i <= 30; i++) {
-                  int margen_3 = margen_2 * (i +1);
-                  int margen_4 = margen_2 * i;
-                  if (last_tick.bid < OrderOpenPrice() - NormalizeDouble(margen_3*Point,Digits)) {
-                      OrderModify(OrderTicket(),OrderOpenPrice(),OrderOpenPrice() - NormalizeDouble(margen_4*Point,Digits),0,0, Red);
-                      constante_compra = last_tick.ask;
-                      }
-                   if (last_tick.ask < OrderOpenPrice() - NormalizeDouble(margen_4*Point,Digits))
-                      constante_compra = last_tick.ask;
-                }   
-          }
-   
+              }              
+          }   
 }
 
 
