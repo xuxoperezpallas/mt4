@@ -33,7 +33,7 @@ input double lots = 0.01;
 
 int margen = 400;
 int margen_cierre = 150;
-int stop_loss = 1000;
+int stop_loss = 500;
 
 bool cierre_venta = false;
 bool cierre_compra = false;
@@ -52,7 +52,7 @@ void OnTick()
        
  
           if (last_tick.ask >= constante_compra + NormalizeDouble(margen*Point,Digits)){
-              OrderSend(NULL, OP_BUY, lots, Ask, 7,NormalizeDouble(stop_loss*Point,Digits),0, "Orden de compra abierta", 12345,0, Green);
+              OrderSend(NULL, OP_BUY, lots, Ask, 7,Ask - NormalizeDouble(stop_loss*Point,Digits),0, "Orden de compra abierta", 12345,0, Green);
               Print ("+++++++++++++++++++++++++++++++++++++++++++++++++++");
               constante_compra += NormalizeDouble(margen*Point,Digits);
               Print("Constante de compra = " +  constante_compra);
@@ -60,7 +60,7 @@ void OnTick()
           }
 
           if (last_tick.bid <= constante_venta -  NormalizeDouble(margen*Point,Digits)){
-              OrderSend(NULL, OP_SELL, lots, Bid, 7,NormalizeDoule(stop_loss*Point,Digits),0, "Orden de venta abierta", 12345,0, Green);
+              OrderSend(NULL, OP_SELL, lots, Bid, 7,Bid + NormalizeDoule(stop_loss*Point,Digits),0, "Orden de venta abierta", 12345,0, Green);
               Print ("---------------------------------------------------");
               constante_venta -= NormalizeDouble(margen*Point,Digits);
               Print("Constante de venta = " +  constante_venta);
@@ -87,5 +87,23 @@ void OnTick()
           }   
 }
 
-
+void reajustar_stop_loss(int order_type, double ultimo_tick, int ticket, double open_price,int  margen_cerrar){
+    int au_dis 5, tick_aumento = 20;
+    int primer_caso = 680;
+    switch (order_type)
+        case OP_BUY:
+            for (int prime = 1; in <= 50; i++){
+                 if (ultimo_tick > open_price + NormalizeDouble(primer_caso*Point,Digits)) {
+                     OrderModify (ticket, open_price, openprice + NormalizeDouble(margen_cerrar*Point,Digits),0,0,red);
+                  }
+             }
+             break;
+        case OP_SELL:
+            for (int prime = 1; in <= 50; i++){
+                 if (ultimo_tick < open_price - NormalizeDouble(primer_caso*Point,Digits)) {
+                     OrderModify (ticket, open_price, openprice - NormalizeDouble(margen_cerrar*Point,Digits),0,0,red);
+                 }
+             }
+             break;
+}
 
