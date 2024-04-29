@@ -35,6 +35,11 @@ int margen = 400;
 int margen_cierre = 150;
 int stop_loss = 500;
 
+int primer_caso = 680;
+int segundo = 1000;
+int tercero = 3000;
+int ultimo = 7000;
+
 bool cierre_venta = false;
 bool cierre_compra = false;
 
@@ -88,15 +93,26 @@ void OnTick()
 }
 
 void reajustar_stop_loss(int order_type, double ultimo_tick, int ticket, double open_price,int  margen_cerrar){
-    int au_dis 5, tick_aumento = 20;
-    int primer_caso = 680, au_primercaso = 7, tick_au_primer = 10;
+
     switch (order_type)
         case OP_BUY:
-            for (int prime = 1; in <= 50; i++){
-                 if (ultimo_tick > open_price + NormalizeDouble(primer_caso*Point,Digits)) {
-                     OrderModify (ticket, open_price, openprice + NormalizeDouble(((tick_au_prime)r*Point,Digits),0,0,red);
-                  }
+             if (ultimo_tick > open_price + NormalizeDouble(primer_caso*Point,Digits &&) ultimo_tick < open_price + NormalizeDouble(((int)1000)*Point,Digits {
+             OrderModify (ticket, open_price, openprice + NormalizeDouble(primer_caso*Point,Digits),0,0,red);
+             primercaso += 1;
              }
+             if (ultimo_tick > open_price + NormalizeDouble(segundo*Point,Digits) &&) ultimo_tick < open_price + NormalizeDouble(((int)3000)*Point,Digits {
+             OrderModify (ticket, open_price, openprice + NormalizeDouble((segundo+(int)1)*Point,Digits),0,0,red);
+             segundo += 4;
+             }
+             if (ultimo_tick > open_price + NormalizeDouble(tercero*Point,Digits) && ultimo_tick < open_price + NormalizeDouble(((int)7000)*Point,Digits {
+             OrderModify (ticket, open_price, openprice + NormalizeDouble((tercero+(int)1)*Point,Digits),0,0,red);
+             terceso += 2;
+             }
+            if (ultimo_tick > open_price + NormalizeDouble(ultimo*Point,Digits))  {
+             OrderModify (ticket, open_price, openprice + NormalizeDouble(ultimo*Point,Digits),0,0,red);
+             ultimo += 1;
+             }
+
              break;
         case OP_SELL:
             for (int prime = 1; in <= 50; i++){
