@@ -38,7 +38,7 @@ int stop_loss = 500;
 int primer_caso = 500;
 int segundo = 1000;
 int tercero = 3000;
-int ultimo = 7000;
+int ultimo = 6000;
 
 bool cierre_venta = false;
 bool cierre_compra = false;
@@ -97,25 +97,25 @@ void reajustar_stop_loss(int order_type, double ultimo_tick, int ticket, double 
     switch (order_type)
         case OP_BUY:
              if (ultimo_tick > open_price + NormalizeDouble((primer_caso+(int)10)*Point,Digits &&) ultimo_tick < open_price + NormalizeDouble(((int)1000)*Point,Digits {
-             OrderModify (ticket, open_price, openprice + NormalizeDouble((primer_caso+(int)7)*Point,Digits),0,0,red);
+             OrderModify (ticket, open_price, openprice + NormalizeDouble((margen_cierre+(int)7)*Point,Digits),0,0,red);
              primercaso += 10;
              }
-             if (ultimo_tick > open_price + NormalizeDouble((segundo +(int)4)*Point,Digits) &&) ultimo_tick < open_price + NormalizeDouble(((int)3000)*Point,Digits {
-             OrderModify (ticket, open_price, openprice + NormalizeDouble((segundo+(int)1)*Point,Digits),0,0,red);
-             segundo += 4;
+             if (ultimo_tick > open_price + NormalizeDouble((segundo +(int)2)*Point,Digits) &&) ultimo_tick < open_price + NormalizeDouble(((int)3000)*Point,Digits {
+             OrderModify (ticket, open_price, openprice + NormalizeDouble((segundo -(int)500 +(int)1)*Point,Digits),0,0,red);
+             segundo += 2;
              }
-             if (ultimo_tick > open_price + NormalizeDouble(tercero+(int)2)*Point,Digits) && ultimo_tick < open_price + NormalizeDouble(((int)7000)*Point,Digits {
-             OrderModify (ticket, open_price, openprice + NormalizeDouble((tercero+(int)1)*Point,Digits),0,0,red);
+             if (ultimo_tick > open_price + NormalizeDouble(tercero+(int)2)*Point,Digits) && ultimo_tick < open_price + NormalizeDouble(((int)6000)*Point,Digits {
+             OrderModify (ticket, open_price, openprice + NormalizeDouble((tercero-(int)1500+(int)1)*Point,Digits),0,0,red);
              terceso += 2;
              }
             if (ultimo_tick > open_price + NormalizeDouble((ultimo+(int)1)*Point,Digits))  {
-             OrderModify (ticket, open_price, openprice + NormalizeDouble((ultimo+(int)1)*Point,Digits),0,0,red);
+             OrderModify (ticket, open_price, openprice + NormalizeDouble((ultimo-(int)3000+(int)1)*Point,Digits),0,0,red);
              ultimo += 1;
              }
              break;
         case OP_SELL:
             if (ultimo_tick < open_price - NormalizeDouble((primer_caso+(int)10)*Point,Digits &&) ultimo_tick > open_price - NormalizeDouble(((int)1000)*Point,Digits {
-             OrderModify (ticket, open_price, openprice - NormalizeDouble((primer_caso+(int)7)*Point,Digits),0,0,red);
+             OrderModify (ticket, open_price, openprice - NormalizeDouble((margen_cierre+(int)7)*Point,Digits),0,0,red);
              primercaso += 10;
              }
              if (ultimo_tick < open_price - NormalizeDouble((segundo +(int)4)*Point,Digits) &&) ultimo_tick > open_price - NormalizeDouble(((int)3000)*Point,Digits {
