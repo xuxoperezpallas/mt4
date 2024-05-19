@@ -57,13 +57,20 @@ void OnTick()
           profit = 0.00;
       }
       
+      MqlTick last_tick;
+
+      SymbolInfoTick(Symbol(), last_tick);
+      
       double last_atr = iATR(Symbol(),PERIOD_M15,14,0);
       
       if (last_atr >= 0.00043 && last_atr >= max_atr)
           max_atr = last_atr;
           
-      if (last_atr < 0.00043)
+      if (last_atr < 0.00043){
           last_atr = 0.00000;
+          constante_compra = last_tick.bid;
+          constante_venta = last_tick.ask;
+      }
           
       if (last_atr >= max_atr - atr_olgura_1)
           not_trade = false;
@@ -71,11 +78,7 @@ void OnTick()
       if ( last_atr < max_atr - atr_olgura_1){
           not_trade = true;
           close_bool = true;
-      }
-      MqlTick last_tick;
-
-      SymbolInfoTick(Symbol(), last_tick);          
-       
+      }                 
  
           if (!not_trade && last_tick.ask >= constante_compra + NormalizeDouble(margen*Point,Digits)){
               OrderSend(NULL, OP_BUY, lots, Ask, 7,0,0, "Orden de compra abierta", 12345,0, Green);
