@@ -32,12 +32,11 @@ void OnDeinit(const int reason)
 input double lots = 0.01;
 
 int margen = 300;
-int olgura = 20;
 
 double profit = 0.00;
 double close_at = 1.00;
 
-double atr_olgura_1 = 0.003;
+double atr_olgura_1 = 0.00005;
 
 double max_atr = 0.00;
 
@@ -60,16 +59,16 @@ void OnTick()
       
       double last_atr = iATR(Symbol(),PERIOD_M15,14,0);
       
-      if (last_atr >= 0.043 && last_atr >= max_atr)
+      if (last_atr >= 0.00043 && last_atr >= max_atr)
           max_atr = last_atr;
           
-      if (last_atr < 0.043)
-          last_atr = 0.000;
+      if (last_atr < 0.00043)
+          last_atr = 0.00000;
           
-      if (max_atr <= last_atr - atr_olgura_1)
+      if (last_atr >= max_atr - atr_olgura_1)
           not_trade = false;
       
-      if ( max_atr > last_atr - atr_olgura_1){
+      if ( last_atr < max_atr - atr_olgura_1){
           not_trade = true;
           close_bool = true;
       }
