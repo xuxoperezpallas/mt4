@@ -36,7 +36,7 @@ input double close_at = 1.00;
 bool close_bool = false;
 bool open = true;
 
-double balance = AccountBalanle();
+double balance = AccountBalance();
 double constante_compra = Bid;
 double constante_venta = Ask;
 
@@ -44,7 +44,9 @@ double constante_venta = Ask;
 void OnTick()
   {
       if (AccountBalance() >= balance + 3.00){
-         open = false;
+          open = false;
+          close_bool = true;
+      }
 
       if (OrdersTotal() == 0) {
           close_bool = false;
