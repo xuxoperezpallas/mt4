@@ -34,13 +34,17 @@ input int margen = 18;
 input double close_at = 1.00;
 
 bool close_bool = false;
+bool open = true;
 
+double balance = AccountBalanle();
 double constante_compra = Bid;
 double constante_venta = Ask;
 
 
 void OnTick()
   {
+      if (AccountBalance() >= balance + 3.00){
+         open = false;
 
       if (OrdersTotal() == 0) {
           close_bool = false;
@@ -53,13 +57,13 @@ void OnTick()
       if (AccountEquity() - AccountBalance() >= close_at)
           close_bool = true;                 
  
-      if (last_tick.ask >= constante_compra + NormalizeDouble(margen*Point,Digits)){
+      if (open && last_tick.ask >= constante_compra + NormalizeDouble(margen*Point,Digits)){
           OrderSend(NULL, OP_BUY, lots, Ask, 7,0,0, "Orden de compra abierta", 12345,0, Green);
           constante_compra += NormalizeDouble(margen*Point,Digits);
           constante_venta = constante_compra;
       }
 
-      if (last_tick.bid <= constante_venta -  NormalizeDouble(margen*Point,Digits)){
+      if (open && last_tick.bid <= constante_venta -  NormalizeDouble(margen*Point,Digits)){
           OrderSend(NULL, OP_SELL, lots, Bid, 7,0,0, "Orden de venta abierta", 12345,0, Green);
           constante_venta -= NormalizeDouble(margen*Point,Digits);
           constante_compra = constante_venta;
