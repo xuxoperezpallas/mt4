@@ -31,7 +31,8 @@ void OnDeinit(const int reason)
 
 input double lot = 0.01;
 input double profit = 1.00;
-input double stop_loss = 10.00;
+input double stop_loss = 45;
+input double loss = 10.00;
 input int margen = 20;
 input bool finalizar = false;
 
@@ -62,21 +63,21 @@ void OnTick()
        close = true;
    }
    
-   if (balance - AccountEquity() >= stop_loss){
+   if (balance - AccountEquity() >= loss){
        close = true;
    } else {
        close = false;
    }
    
    if (trade && last_tick.ask >= last_buy + NormalizeDouble(margen*Point, Digits)){
-       OrderSend(Symbol(), OP_BUY, lot, Ask, 3, Ask - NormalizeDouble(((int) 50)*Point,Digits),0, "orden de compra abierta",
+       OrderSend(Symbol(), OP_BUY, lot, Ask, 3, Ask - NormalizeDouble(stop_loss*Point,Digits),0, "orden de compra abierta",
        12345, 0, Black);
        last_buy += NormalizeDouble(margen*Point,Digits);
        last_sell = last_buy;
    }
    
       if (trade && last_tick.bid <= last_sell - NormalizeDouble(margen*Point, Digits)){
-       OrderSend(Symbol(), OP_SELL, lot, Bid, 3,Bid + NormalizeDouble(((int) 50)*Point,Digits),0, "orden de venta abierta",
+       OrderSend(Symbol(), OP_SELL, lot, Bid, 3,Bid + NormalizeDouble(stop_loss*Point,Digits),0, "orden de venta abierta",
        12345, 0, Black);
        last_sell -= NormalizeDouble(margen*Point,Digits);
        last_buy = last_sell;
