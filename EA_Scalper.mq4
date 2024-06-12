@@ -31,7 +31,7 @@ void OnDeinit(const int reason)
 
 input double lot = 0.01;
 input double profit = 1.00;
-input double stop_loss = 45;
+input int stop_loss = 45;
 input double loss = 10.00;
 input int margen = 20;
 input bool finalizar = false;
