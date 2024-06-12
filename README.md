@@ -14,7 +14,11 @@ Explicacion del EA_Scalper
 
 No aconsoje utilizar el EA cuando comienza las operaciones el domingo a las 12:00, por eso aconsejor retirarlos el viernes y colocarlos el lunes por la mañana.
 
-Si aumentamos los lots entonce tambien podemos aumentar el profit y el loss en consecuencia ( si doblamos, pues el doble)
+Si aumentamos los lots entonce tambien podemos aumentar el profit y el loss en consecuencia ( si doblamos, pues el doble).
+
+Hay que tener cuidado con el nivel de Ask y de Bid a la hora de colocar el margen yo aconsejo colocarlo 10 puntos por encima de este.
+
+Utilizando el boroker fusion Markets en GBP/USD no tenemos este problema pues los nivels de Ask y Bid son los mismos.
 
 
 
