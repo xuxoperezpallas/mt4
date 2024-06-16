@@ -62,7 +62,7 @@ void OnTick()
        close = false;
    }
    
-   if (OrdersTotal() == 0 && finalizar_1  == true) {
+   if (OrdersTotal() == 0 && (finalizar == true || finalizar_1  == true)) {
        trade = false;
    }
    
