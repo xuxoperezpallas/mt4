@@ -35,6 +35,7 @@ input int stop_loss = 40;
 input double loss = 10.00;
 input int margen = 20;
 input bool finalizar = false;
+bool  finalizar_1 = finalizar;
 
 bool trade = true;
 bool close = false;
@@ -49,13 +50,19 @@ void OnTick()
    MqlTick last_tick;
    
    SymbolInfoTick(Symbol(), last_tick);
+
+   if (TimeHour(TimeLocal()) >= 8 && TimeHour(TimeLocal()) <= 19){
+       finalizar_1 = false;
+   } else {
+       finalizar_1 = true;
+   }
    
    if (OrdersTotal() == 0) {
        balance = AccountBalance();
        close = false;
    }
    
-   if (OrdersTotal() == 0 && finalizar == true) {
+   if (OrdersTotal() == 0 && finalizar_1  == true) {
        trade = false;
    }
    
