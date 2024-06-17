@@ -51,6 +51,11 @@ void OnTick()
    
    SymbolInfoTick(Symbol(), last_tick);
 
+  if (TimeHour(TimeLocal()) < 8) {
+      last_buy = Bid;
+      last_sell = Asl;
+   }
+  
    if (TimeHour(TimeLocal()) >= 8 && TimeHour(TimeLocal()) <= 19){
        finalizar_1 = false;
    } else {
