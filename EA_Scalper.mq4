@@ -33,7 +33,7 @@ input double lot = 0.01;
 input double profit = 0.10;
 input int stop_loss = 40;
 input double loss = 10.00;
-input int margen = 20;
+input int margen = 10;
 input bool finalizar = false;
 bool  finalizar_1 = finalizar;
 
@@ -50,16 +50,17 @@ void OnTick()
    MqlTick last_tick;
    
    SymbolInfoTick(Symbol(), last_tick);
+   
+   int h = TimeHour(TimeLocal());
 
-  if (TimeHour(TimeLocal()) < 8) {
-      last_buy = Bid;
-      last_sell = Ask;
-   }
-  
-   if (TimeHour(TimeLocal()) >= 8 && TimeHour(TimeLocal()) <= 19){
-       finalizar_1 = false;
-   } else {
+   Print("La hora es: " + h);
+
+   if (h <= 8){
        finalizar_1 = true;
+   } else if ( h >= 19) {
+       finalizar_1 = true;
+   } else {
+       finalizar_1 = false;
    }
    
    if (OrdersTotal() == 0) {
@@ -67,18 +68,22 @@ void OnTick()
        close = false;
    }
    
+   Print("El balance es = " + balance);
+   
    if (OrdersTotal() == 0 && (finalizar == true || finalizar_1  == true)) {
        trade = false;
+       last_buy = Bid;
+       last_sell = Ask;
+   } else {
+       trade = true;
    }
-   
+    
    if (AccountEquity() - balance >= profit) {
        close = true;
    }
    
    if (balance - AccountEquity() >= loss){
        close = true;
-   } else {
-       close = false;
    }
    
    if (trade && last_tick.bid >= last_buy + NormalizeDouble(margen*Point, Digits)){
@@ -98,8 +103,8 @@ void OnTick()
    for (int i = 0; i < OrdersTotal(); i++){
        if (!OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
            continue;
-       
-       if (Symbol() == OrderSymbol() && (OrderType() == OP_BUY || OrderType() == OP_SELL) && close) {
+               
+       if (Symbol() == OrderSymbol() && (OrderType() == OP_BUY || OrderType() == OP_SELL) && close == true) {
            OrderClose(OrderTicket(), OrderLots(), OrderClosePrice(), 3, Black);
        }
    }
