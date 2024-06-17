@@ -53,7 +53,7 @@ void OnTick()
 
   if (TimeHour(TimeLocal()) < 8) {
       last_buy = Bid;
-      last_sell = Asl;
+      last_sell = Ask;
    }
   
    if (TimeHour(TimeLocal()) >= 8 && TimeHour(TimeLocal()) <= 19){
