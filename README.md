@@ -21,4 +21,13 @@ Hay que tener cuidado con el nivel de Ask y de Bid a la hora de colocar el marge
 Utilizando el boroker fusion Markets en GBP/USD no tenemos este problema pues los nivels de Ask y Bid son los mismos.
 
 
+2. ¿Como hacer prop trading? Es decir como invertir con cuentas con dinero ya disponible. Lo malo es que no es gratis hay que pagar aunque hay cuentas con precio bajo ofrecen entre de 10000 Euros para arriva y cuestan unos 100 Euros hay que pasar un periodo de prueba. Aunque algunos permiten operar con asesores expertos(bots) la mayoria no. Pero la mayoria ofrecen las plataformas mt4 y mt5. El problema es que no se hasta que punto es legal y hasta que punto es de fiar ( yo no lo he probado). Pero por 100 Euros obtener una cuenta con 250.000 Euros y que ademas generas un 90% de los beneficios de todo lo que ganes no se hasta que punto vale la pena probar. Yo prefiero las cuentas de trading normal. Pero a quien le guste puede probar.
+3. Como muchos no ofrecen el trading automatizado con asesores expertos se puede descargar muy bueno indicadores para operar de forma manual.
+4. Se pueden encontrar estos indicadores entre otros muchos programas de mt4 y mt5 en la siguiente direccion:
+5. https://forexcracked.com
+6. Son gratuitos y vale la pena probarlos tanto para hacer prop trading como para trading tradicional.
+7. Yo siempre digo que es mejor probar con dinero virtual primero durante unos meses para asegurarse de no perder capital
+8. Ademas existen cuentas como forexmarkets entre otros que ofrecen unas comisiones bajisimas o nulas en algunos activos, aunque conbras unos 0.04 Euros de comision por 0.01 pips (En forexmarkets) lo que es muy poco y permite operar con mayor rentabilidad.
+
+
 
