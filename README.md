@@ -33,5 +33,9 @@ Utilizando el boroker fusion Markets en GBP/USD no tenemos este problema pues lo
 
 10. Es una buena manera de conocer la direccion del mercado en ese activo en esa vela en periodos no volatiles.
 
+11. El indicador RSI sigue tres patrones en periodos no volotiles, linea continua en el medio del indicador que indica que la bolsa ni sube ni baja, medias lunas con picos tocando los 70 puntos indica que la bolsa esta al alza con sus crestas y valles. Medias lunas con picos tocando los 30 puntos indica que la bolsa esta a la baja con sus crestas y valles.
+
+12. Tabien pueden seguir otro tipo de patron per es mas ya en peridos volatiles superando los 70 puntos por encima en crecimiento  o los 30 puntos por debajo en bajada.
+
 
 
