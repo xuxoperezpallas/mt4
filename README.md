@@ -31,7 +31,7 @@ Utilizando el boroker fusion Markets en GBP/USD no tenemos este problema pues lo
 
 9. Y si lo que quereis es invertir sin robots, podreis fijaros que todas las velas siguen el mismo patron, me atreveria a decir que absolutamente todas. punto de apertura pico hacia arriba o abajo, elongacion de la vela en una direccion, otro pico hacia abajo o ariba y punto de cierre, a veces puede coincidir que el maximo o el minimo o ambos coincidad con el punto de cierre o de apertura.
 
-10. Es una buena manera de conocer la direccion del mercado en ese activo en esa vela.
+10. Es una buena manera de conocer la direccion del mercado en ese activo en esa vela en periodos no volatiles.
 
 
 
