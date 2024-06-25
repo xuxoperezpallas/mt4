@@ -29,7 +29,7 @@ Utilizando el boroker fusion Markets en GBP/USD no tenemos este problema pues lo
 7. Yo siempre digo que es mejor probar con dinero virtual primero durante unos meses para asegurarse de no perder capital
 8. Ademas existen cuentas como forexmarkets entre otros que ofrecen unas comisiones bajisimas o nulas en algunos activos, aunque conbras unos 0.04 Euros de comision por 0.01 pips (En forexmarkets) lo que es muy poco y permite operar con mayor rentabilidad.
 
-9. Y si lo que quereis es invertir sin robots, podreis fijaros que todas las velas siguen el mismo patron, me atreveria a decir que absolutamente todas. punto de apertura pico hacia arriba o abajo, elongacion de la vela en una direccion, otro pico hacia abajo o ariba y punto de cierre, a veces puede coincidir que el maximo o el minimo o ambos coincidad con el punto de cierre o de apertura.
+9. Y si lo que quereis es invertir sin robots, podreis fijaros que todas las velas siguen el mismo patron, me atreveria a decir que absolutamente todas. Punto de apertura, pico hacia arriba o abajo, elongacion de la vela en una direccion, otro pico hacia abajo o arriba y punto de cierre, a veces puede coincidir que el maximo o el minimo o ambos con el punto de cierre o de apertura.
 
 10. Es una buena manera de conocer la direccion del mercado en ese activo en esa vela en periodos no volatiles, hay que ir detras de ella.
 
