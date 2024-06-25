@@ -51,17 +51,6 @@ void OnTick()
    
    SymbolInfoTick(Symbol(), last_tick);
    
-   int h = TimeHour(TimeLocal());
-
-   Print("La hora es: " + h);
-
-   if (h <= 8){
-       finalizar_1 = true;
-   } else if ( h >= 19) {
-       finalizar_1 = true;
-   } else {
-       finalizar_1 = false;
-   }
    
    if (OrdersTotal() == 0) {
        balance = AccountBalance();
@@ -70,7 +59,7 @@ void OnTick()
    
    Print("El balance es = " + balance);
    
-   if (OrdersTotal() == 0 && (finalizar == true || finalizar_1  == true)) {
+   if (OrdersTotal() == 0 && finalizar == true ) {
        trade = false;
        last_buy = Bid;
        last_sell = Ask;
