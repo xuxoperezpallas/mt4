@@ -3,7 +3,7 @@
 //|                      Usando JSON.mqh para conexión a Investing.com |
 //+------------------------------------------------------------------+
 #property strict
-#include <JSON.mqh> // Asegúrate de tener esta librería en /Include/
+#include <Format/Json.mqh> // Asegúrate de tener esta librería en /Include/
 
 // --- Parámetros Ajustables ---
 input string apiKey = "TU_API_KEY"; // Clave de API (opcional)
