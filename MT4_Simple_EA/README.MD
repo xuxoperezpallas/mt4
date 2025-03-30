@@ -5,7 +5,7 @@ Forex EA that trades using price waves + economic news.
 ## 🚀 How to Use
 
 1.  Download Files:
-   - `WaveNewsEA.mq4` (main EA file)
+   - `EA_News.mq4` (main EA file)
    - `JSON.mqh` (library for news API)
 
 2. Install in MT4:
