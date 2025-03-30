@@ -1,4 +1,4 @@
-# WaveNewsEA for MT4
+# EA_NEWSEA for MT4
 
 Forex EA that trades using price waves + economic news.
 
@@ -6,11 +6,11 @@ Forex EA that trades using price waves + economic news.
 
 1.  Download Files:
    - `EA_NEWS.mq4` (main EA file)
-   - `JSON.mqh` (library for news API)
+   - `https://github.com/dingmaotu/mql4-lib` (library for news API)
 
 2. Install in MT4:
-   - Copy `.mq4` to `MQL4/Experts/`
-   - Copy `.mqh` to `MQL4/Include/`
+   - Copy `EA_NEWs.mq4` to `MQL4/Experts/
+   - Copy `mql4-lib` folder to `MQL4/Include/`
 
 3. Set Up API (optional):
    ```mql4
