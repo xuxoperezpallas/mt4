@@ -1,71 +1,73 @@
-# EA de Cobertura Dinámica para MetaTrader 4/5
+# Smart Hedge EA for MetaTrader 4/5
+
+![EA Logo](https://via.placeholder.com/150) (Optional: Add actual logo if available)
 
 ## 📌 Descripción
-Este Expert Advisor (EA) para MetaTrader 4/5 implementa una estrategia de cobertura dinámica que:
-✅ Mantiene un equilibrio entre posiciones de compra y venta
-✅ Coloca stop-loss como take-profit (ejemplo: 100 pips)
-✅ Abre nuevas posiciones de cobertura cuando el mercado se mueve en contra
-✅ Cierra posiciones con beneficio y reabre nuevas operaciones
 
-Ideal para mercados con oscilaciones laterales o tendencias con retrocesos frecuentes.
+Este Expert Advisor (EA) implementa una estrategia avanzada de cobertura dinámica con:
 
----
+- **Equilibrio estricto** entre posiciones de compra/venta (margen ≈ 0)
+- **Gestión inteligente de Stop Loss** para asegurar beneficios
+- **Cierre selectivo** de posiciones en extremos
+- **Reapertura automática** para mantener exposición constante
 
-## ⚙️ Parámetros Ajustables
-| Parámetro           | Descripción                                  | Valor por Defecto |
-|---------------------|--------------------------------------------|------------------|
-| TakeProfitPips      | Beneficio objetivo en pips                  | 100 pips         |
-| HedgeDistance       | Distancia para nueva cobertura              | 50 pips          |
-| LotSize             | Volumen de operación (0.1, 0.5, 1.0)       | 0.1              |
-| MaxPositions        | Máximo de posiciones por lado              | 10               |
+## 🔥 Características Clave
 
----
+✅ **Cobertura perfecta 1:1**  
+✅ Stop Loss dinámico con toma de beneficios automática  
+✅ Protección contra acumulación en extremos  
+✅ Sin Take Profit fijo (cierre por movimiento de precio)  
+✅ Normalización precisa de precios  
 
-## 📊 Lógica del EA
-1. **Balance de Posiciones**
-   - Si hay más compras, abre venta (y viceversa)
-   - Mantiene igual número de operaciones en ambos sentidos
+## ⚙️ Parámetros
 
-2. **Gestión de Beneficios**
-   - Cada posición abre con stop-loss como take-profit
-   - Si el precio sube/baja 100 pips, cierra con ganancia
+| Parámetro           | Descripción                         | Valor por Defecto |
+|---------------------|-----------------------------------|------------------|
+| `LotSize`           | Tamaño del lote                   | 0.1              |
+| `GridStep`          | Distancia entre niveles (pips)    | 200              |
+| `ProfitDistance`    | Beneficio objetivo (pips)         | 100              |
+| `MaxAccumulation`   | Máximo posiciones en extremos     | 3                |
 
-3. **Reapertura Automática**
-   - Al cerrar con beneficio, abre nueva operación opuesta
+## 📊 Lógica de Trading
 
----
-
-## 📈 Escenarios
-### 🔹 Mercado Lateral
-- Obtiene beneficios en cada oscilación
-- Cierra y reabre continuamente
-
-### 🔹 Mercado con Tendencia
-- Funciona mejor con retrocesos frecuentes
-- Riesgo en tendencias fuertes sin correcciones
-
----
-
-## ⚠️ Advertencias
-❌ No para tendencias fuertes sin retrocesos
-❌ Requiere spreads bajos
-❌ Usa más margen por posiciones opuestas
-
-🔹 Recomendación:
-- Optimizar parámetros para cada activo
-- Probar en backtest y forward-test primero
-
----
+1. **Apertura Inicial**:
+   - Abre 1 compra + 1 venta al inicio
+2. **Movimiento Alcista**:
+   - Si precio sube +200 pips en compra → SL = +100 pips
+   - Al retroceder 100 pips → Cierra con ganancia
+3. **Movimiento Bajista**:
+   - Si precio baja -200 pips en venta → SL = -100 pips
+   - Al retroceder 100 pips → Cierra con ganancia
+4. **Acumulación en Extremos**:
+   - Cierra 3 posiciones superiores + 3 inferiores si hay desbalance
 
 ## 📥 Instalación
-1. Descargar archivo .mq4/.mq5
-2. Copiar a MQL4/Experts o MQL5/Experts
-3. Reiniciar MT4/MT5 y arrastrar EA al gráfico
 
----
+1. Descargar archivo `.mq4`/`.mq5`
+2. Copiar a `MQL4/Experts` o `MQL5/Experts`
+3. Reiniciar MetaTrader
+4. Arrastrar EA al gráfico
+
+## ⚠️ Requisitos
+
+- MetaTrader 4 o 5
+- Broker con spreads bajos (< 2 pips)
+- Cuenta con cobertura permitida
+
+## 📈 Rendimiento Esperado
+
+| Mercado          | Rentabilidad* |
+|------------------|-------------|
+| Lateral          | Alta        |
+| Volátil         | Media-Alta  |
+| Tendencia fuerte | Baja        |
+
+*Depende de configuración y condiciones de mercado
 
 ## 📜 Licencia
-🔓 Código abierto - Libre uso y modificación
+
+Código abierto (MIT License) - Libre uso y modificación
 
 ---
-🚀 **¿Listo para probarlo?** ¡Configura, prueba y optimiza!
+
+**📌 Nota**: Este EA funciona mejor en pares con alta volatilidad como GBP/JPY o EUR/JPY. Se recomienda testing previo en cuenta demo.
