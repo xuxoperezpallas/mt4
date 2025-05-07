@@ -12,7 +12,10 @@
 input int    PipsDistance = 200;    // Distancia en pips entre operaciones
 input double LotSize      = 0.1;    // Tamaño del lote
 input int    MagicNumber  = 12345;  // Número mágico
-input int    Slippage     = 3;      // Deslizamiento permitido
+input int    Slippage     = 3;      // Deslizamiento permitidoint 
+input int    backdistance = 200;
+input int    distance     = 800;
+input int    stoploss     = 100;
 
 // Variables globales
 double buyLevel, sellLevel;
@@ -45,7 +48,7 @@ void OnTick()
      {
       OrderSend(Symbol(), OP_BUY, LotSize, Ask, Slippage, 0, 0, "", MagicNumber, 0, clrGreen);
       buyLevel = NormalizeDouble(buyLevel + PipsDistance * _Point, _Digits);
-      sellLevel = NormalizeDouble(sellLevel + PipsDistance * _Point, _Digits);
+      sellLevel = NormalizeDouble(buyLevel - backdistance * _Point, _Digits);
      }
    
    // Verificar condiciones para venta
@@ -53,7 +56,7 @@ void OnTick()
      {
       OrderSend(Symbol(), OP_SELL, LotSize, Bid, Slippage, 0, 0, "", MagicNumber, 0, clrRed);
       sellLevel = NormalizeDouble(sellLevel - PipsDistance * _Point, _Digits);
-      buyLevel = NormalizeDouble(buyLevel - PipsDistance * _Point, _Digits);
+      buyLevel = NormalizeDouble(sellLevel + backdistance * _Point, _Digits);
      }
    
    // Gestionar stops de posiciones abiertas
@@ -73,17 +76,17 @@ void ManagePositions()
            {
             if(OrderType() == OP_BUY)
               {
-               if(Bid > NormalizeDouble(OrderOpenPrice() + PipsDistance * _Point, _Digits))
+               if(Bid > NormalizeDouble(OrderOpenPrice() + distance * _Point, _Digits))
                  {
-                  double newSL = NormalizeDouble(OrderOpenPrice() + (PipsDistance/2) * _Point, _Digits);
+                  double newSL = NormalizeDouble(OrderOpenPrice() + stoploss * _Point, _Digits);
                   OrderModify(OrderTicket(), OrderOpenPrice(), newSL, OrderTakeProfit(), 0, clrBlue);
                  }
               }
             else if(OrderType() == OP_SELL)
               {
-               if(Ask < NormalizeDouble(OrderOpenPrice() - PipsDistance * _Point, _Digits))
+               if(Ask < NormalizeDouble(OrderOpenPrice() - distance * _Point, _Digits))
                  {
-                  double newSL = NormalizeDouble(OrderOpenPrice() - (PipsDistance/2) * _Point, _Digits);
+                  double newSL = NormalizeDouble(OrderOpenPrice() - stoploss * _Point, _Digits);
                   OrderModify(OrderTicket(), OrderOpenPrice(), newSL, OrderTakeProfit(), 0, clrOrange);
                  }
               }
