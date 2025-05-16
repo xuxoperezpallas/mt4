@@ -20,7 +20,7 @@ input int    stoploss     = 3000;
 
 // Variables globales
 double buyLevel, sellLevel, max = 0.000, min =999999.9;
-
+int restablecer = 5100;
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
@@ -52,10 +52,14 @@ void OnTick()
       buyLevel = NormalizeDouble(buyLevel + PipsDistance * _Point, _Digits);
       sellLevel = NormalizeDouble(buyLevel - backdistance * _Point, _Digits);
      }
+
    if (Bid > max)
      {
       max = Bid;
      }
+
+   if (Bid + NormalezeDoube(restablecer*Point,Digits) < max) {max = 0.000;}
+
    // Verificar condiciones para venta
    if(Ask < NormalizeDouble(sellLevel, _Digits))
      {
@@ -68,6 +72,7 @@ void OnTick()
       {
         min = Ask;
       }
+    if (Ask - NormalizeDouble(restablecer*Point,Digits) > min){min=999999.9;}
 
 for(int i = OrdersTotal()-1; i >= 0; i--)
      {
