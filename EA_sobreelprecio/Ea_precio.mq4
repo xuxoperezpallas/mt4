@@ -57,19 +57,10 @@ void OnTick()
      {
       OrderSend(Symbol(), OP_SELL, LotSize, Bid, Slippage, Ask + NormalizeDouble(stoploss*Point,Digits) , 0, "", MagicNumber, 0, clrRed);
       sellLevel = NormalizeDouble(sellLevel - PipsDistance * _Point, _Digits);
-      buyLevel = NormalizeDouble(sellLevel + backdistance * _Point, _Digits);
-     }
-   
-   // Gestionar stops de posiciones abiertas
-   ManagePositions();
-  }
+      buyLevel = NormalizeDouble(sellLevel + backdistance * Point, Digits);
+      }
 
-//+------------------------------------------------------------------+
-//| Función para gestionar posiciones abiertas                       |
-//+------------------------------------------------------------------+
-void ManagePositions()
-  {
-   for(int i = OrdersTotal()-1; i >= 0; i--)
+for(int i = OrdersTotal()-1; i >= 0; i--)
      {
       if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
         {
