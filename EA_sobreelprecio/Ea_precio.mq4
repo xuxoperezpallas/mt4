@@ -10,10 +10,10 @@
 
 // Inputs
 input int    PipsDistance = 200;    // Distancia en pips entre operaciones
-input double LotSize      = 0.1;    // Tamaño del lote
+input double LotSize      = 0.01;    // Tamaño del lote
 input int    MagicNumber  = 12345;  // Número mágico
 input int    Slippage     = 3;      // Deslizamiento permitidoint 
-input int    backdistance = 200;
+input int    backdistance = 600;
 input int    distance     = 800;
 input int    stopreturn     = 200;
 input int    stoploss     = 3000;
