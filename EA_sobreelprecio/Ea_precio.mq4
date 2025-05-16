@@ -15,7 +15,8 @@ input int    MagicNumber  = 12345;  // Número mágico
 input int    Slippage     = 3;      // Deslizamiento permitidoint 
 input int    backdistance = 200;
 input int    distance     = 800;
-input int    stoploss     = 100;
+input int    stopreturn     = 200;
+input int    stoploss     = 3000;
 
 // Variables globales
 double buyLevel, sellLevel;
@@ -46,7 +47,7 @@ void OnTick()
    // Verificar condiciones para compra
    if(Bid > NormalizeDouble(buyLevel, _Digits))
      {
-      OrderSend(Symbol(), OP_BUY, LotSize, Ask, Slippage, 0, 0, "", MagicNumber, 0, clrGreen);
+      OrderSend(Symbol(), OP_BUY, LotSize, Ask, Slippage, Bid - NormalizeDouble(stoploss*Point,Digits), 0, "", MagicNumber, 0, clrGreen);
       buyLevel = NormalizeDouble(buyLevel + PipsDistance * _Point, _Digits);
       sellLevel = NormalizeDouble(buyLevel - backdistance * _Point, _Digits);
      }
@@ -54,7 +55,7 @@ void OnTick()
    // Verificar condiciones para venta
    if(Ask < NormalizeDouble(sellLevel, _Digits))
      {
-      OrderSend(Symbol(), OP_SELL, LotSize, Bid, Slippage, 0, 0, "", MagicNumber, 0, clrRed);
+      OrderSend(Symbol(), OP_SELL, LotSize, Bid, Slippage, Ask + NormalizeDouble(stoploss*Point,Digits) , 0, "", MagicNumber, 0, clrRed);
       sellLevel = NormalizeDouble(sellLevel - PipsDistance * _Point, _Digits);
       buyLevel = NormalizeDouble(sellLevel + backdistance * _Point, _Digits);
      }
@@ -78,7 +79,7 @@ void ManagePositions()
               {
                if(Bid > NormalizeDouble(OrderOpenPrice() + distance * _Point, _Digits))
                  {
-                  double newSL = NormalizeDouble(OrderOpenPrice() + stoploss * _Point, _Digits);
+                  double newSL = NormalizeDouble(OrderOpenPrice() + stopreturn * _Point, _Digits);
                   OrderModify(OrderTicket(), OrderOpenPrice(), newSL, OrderTakeProfit(), 0, clrBlue);
                  }
               }
@@ -86,7 +87,7 @@ void ManagePositions()
               {
                if(Ask < NormalizeDouble(OrderOpenPrice() - distance * _Point, _Digits))
                  {
-                  double newSL = NormalizeDouble(OrderOpenPrice() - stoploss * _Point, _Digits);
+                  double newSL = NormalizeDouble(OrderOpenPrice() - stopreturn * _Point, _Digits);
                   OrderModify(OrderTicket(), OrderOpenPrice(), newSL, OrderTakeProfit(), 0, clrOrange);
                  }
               }
