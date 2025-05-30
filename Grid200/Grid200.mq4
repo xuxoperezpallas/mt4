@@ -20,8 +20,9 @@ input int    stoploss     = 3000;
 
 // Variables globales
 double buyLevel, sellLevel, max = 0.000, min =999999.9;
-int restablecer = 5100, olgura = 100;
-int top = 5000;
+input int restablecer = 2100;
+input int olgura = 100;
+input int top = 2000;
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
@@ -59,7 +60,7 @@ void OnTick()
       max = Bid;
      }
 
-   if (Bid + NormalezeDoube(restablecer*Point,Digits) < max) {max = 0.000;}
+   if (Bid + NormalizeDouble(restablecer*Point,Digits) < max) {max = 0.000;}
 
    // Verificar condiciones para venta
    if(Ask < NormalizeDouble(sellLevel, _Digits))
@@ -83,8 +84,8 @@ for(int i = OrdersTotal()-1; i >= 0; i--)
            {
             if(OrderType() == OP_BUY)
               {
-                if(max - NormalizeDouble((top)*Point,Digits) > OrderOpenPrice())
-                  OrderModify(OrderTicket(), OrderOpenPrice(), max - NormaliceDouble(top*Point,Digits), OrderTakeProfit(), 0, clrBlue);
+                if(max - NormalizeDouble((top)*Point,Digits) > OrderOpenPrice()){
+                  OrderModify(OrderTicket(), OrderOpenPrice(), max - NormalizeDouble(top*Point,Digits), OrderTakeProfit(), 0, clrBlue);
                  }
               }
             else if(OrderType() == OP_SELL)
