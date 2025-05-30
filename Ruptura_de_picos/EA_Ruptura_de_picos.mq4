@@ -119,9 +119,9 @@ void VerificarRupturas(double &maximosFiltrados[], double &minimosFiltrados[])
     // Verificar ruptura de máximos (compra)
     for(int i=0; i<ArraySize(maximosFiltrados); i++)
     {
-        if(Bid > maximosFiltrados[i] + PipsEntrada * Point && OrdersTotal() == 0)
+        if(Bid > maximosFiltrados[i] + NormalizeDouble(PipsEntrada * Point, Digits) && OrdersTotal() == 0)
         {
-            double takeProfit = Bid + ObjetivoPips * Point;
+            double takeProfit = Bid + NormalizeDouble(ObjetivoPips * Point, Digits);
             OrderSend(Symbol(), OP_BUY, 0.1, Ask, 3, 0, takeProfit, "Ruptura Máximo", 0, 0, clrGreen);
             break;
         }
@@ -130,9 +130,9 @@ void VerificarRupturas(double &maximosFiltrados[], double &minimosFiltrados[])
     // Verificar ruptura de mínimos (venta)
     for(int ii=0; ii<ArraySize(minimosFiltrados); ii++)
     {
-        if(Ask < minimosFiltrados[ii] - PipsEntrada * Point && OrdersTotal() == 0)
+        if(Ask < minimosFiltrados[ii] - NormalizeDouble(PipsEntrada * Point, Digits) && OrdersTotal() == 0)
         {
-            double takeProfit_2 = Ask - ObjetivoPips * Point;
+            double takeProfit_2 = Ask - NormalizeDouble(ObjetivoPips * Point,Digits);
             OrderSend(Symbol(), OP_SELL, 0.1, Bid, 3, 0, takeProfit_2, "Ruptura Mínimo", 0, 0, clrRed);
             break;
         }
