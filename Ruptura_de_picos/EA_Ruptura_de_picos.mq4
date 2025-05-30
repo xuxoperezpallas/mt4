@@ -69,8 +69,7 @@ void FiltrarMaximos(double &arrayMaximos[], double &maximosFiltrados[])
     }
     
     ArrayResize(maximosFiltrados, count);
-    ArraySort(maximosFiltrados);
-    ArrayReverse(maximosFiltrados);
+    ArraySort(maximosFiltrados, WHOLE_ARRAY, 0, MODE_DESCEND);
 }
 
 //+------------------------------------------------------------------+
