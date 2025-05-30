@@ -128,12 +128,12 @@ void VerificarRupturas(double &maximosFiltrados[], double &minimosFiltrados[])
     }
     
     // Verificar ruptura de mínimos (venta)
-    for(int i=0; i<ArraySize(minimosFiltrados); i++)
+    for(int ii=0; ii<ArraySize(minimosFiltrados); ii++)
     {
-        if(Ask < minimosFiltrados[i] - PipsEntrada * Point && OrdersTotal() == 0)
+        if(Ask < minimosFiltrados[ii] - PipsEntrada * Point && OrdersTotal() == 0)
         {
-            double takeProfit = Ask - ObjetivoPips * Point;
-            OrderSend(Symbol(), OP_SELL, 0.1, Bid, 3, 0, takeProfit, "Ruptura Mínimo", 0, 0, clrRed);
+            double takeProfit_2 = Ask - ObjetivoPips * Point;
+            OrderSend(Symbol(), OP_SELL, 0.1, Bid, 3, 0, takeProfit_2, "Ruptura Mínimo", 0, 0, clrRed);
             break;
         }
     }
