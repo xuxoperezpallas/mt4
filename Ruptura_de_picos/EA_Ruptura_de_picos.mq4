@@ -54,7 +54,7 @@ void FiltrarMaximos(double &arrayMaximos[], double &maximosFiltrados[])
         bool esSignificativo = true;
         for(int j=0; j<count; j++)
         {
-            if(MathAbs(tempArray[i] - maximosFiltrados[j]) < DiferenciaPips * Point)
+            if(MathAbs(tempArray[i] - maximosFiltrados[j]) < NormalizeDouble(DiferenciaPips * Point,Digits))
             {
                 esSignificativo = false;
                 break;
@@ -93,7 +93,7 @@ void FiltrarMinimos(double &arrayMinimos[], double &minimosFiltrados[])
         bool esSignificativo = true;
         for(int j=0; j<count; j++)
         {
-            if(MathAbs(tempArray[i] - minimosFiltrados[j]) < DiferenciaPips * Point)
+            if(MathAbs(tempArray[i] - minimosFiltrados[j]) < NormalizeDouble(DiferenciaPips * Point,Digits))
             {
                 esSignificativo = false;
                 break;
