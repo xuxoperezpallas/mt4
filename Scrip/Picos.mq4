@@ -35,6 +35,9 @@ void OnTick()
      {
       max = Bid;
      }
+    else if ( Bid - NormalizeDouble(dif *Point,Digits) < max) {
+      Pico[i] = max;
+       }
 
    if (Bid + NormalizeDouble(restablecer*Point,Digits) < max) {max = 0.000;}
    
