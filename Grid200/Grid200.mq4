@@ -20,9 +20,12 @@ input int    stoploss     = 3000;
 
 // Variables globales
 double buyLevel, sellLevel, max = 0.000, min =999999.9;
-input int restablecer = 2100;
+input int restablecer = 3100;
 input int olgura = 100;
-input int top = 2000;
+input int top = 3000;
+double ganacia = 1000.0;
+bool cierratodo = false;
+double balanc = AccountBalance();
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
@@ -47,6 +50,14 @@ void OnDeinit(const int ason)
 //+------------------------------------------------------------------+
 void OnTick()
   {
+   if(OrdersTolal() == 0){
+     balanc = AccountBalance();
+     cierratodo = false;
+  }
+  if (AccountEquity() - balance => ganancia){
+     cierratodo = true;
+  }
+   
    // Verificar condiciones para compra
    if(Bid > NormalizeDouble(buyLevel, _Digits))
      {
@@ -98,5 +109,24 @@ for(int i = OrdersTotal()-1; i >= 0; i--)
            }
         }
      }
-  }
+
+    if(cierratodo == true) {
+for(int i = OrdersTotal() - 1; i >= 0; i--)
+   {
+      if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
+      {
+         if(OrderType() == OP_BUY || OrderType() == OP_SELL)
+         {
+            double price = (OrderType() == OP_BUY) ? Bid : Ask;
+            bool closed = OrderClose(OrderTicket(), OrderLots(), price, 3, clrNONE);
+
+            if(!closed)
+               Print("Error al cerrar orden ", OrderTicket(), " - Error: ", GetLastError());
+            else
+               Print("Orden cerrada: ", OrderTicket());
+         }
+      }
+   }
+ }
+}
 //+------------------------------------------------------------------+
