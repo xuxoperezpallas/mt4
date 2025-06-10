@@ -18,6 +18,9 @@ input int    backdistance = 800;
 input int    distance     = 1000;
 input int    stoploss     = 200;
 input int    takeprofit   = 3000;
+double ganancia = 1000.0;
+bool cierratodo = false;
+double balanc = AccountBalance();
 
 // Variables globales
 double buyLevel, sellLevel;
