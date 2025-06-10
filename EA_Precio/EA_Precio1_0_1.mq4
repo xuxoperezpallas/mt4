@@ -35,24 +35,39 @@ int OnInit()
    sellLevel = NormalizeDouble(Bid - PipsDistance * _Point, _Digits);
    return(INIT_SUCCEEDED);
   }
-                                                                                                                               //+------------------------------------------------------------------+
-//| Expert deinitialization function                                 |                                                         //+------------------------------------------------------------------+
+                                                                                                                               
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |                                                         
+//+------------------------------------------------------------------+
 void OnDeinit(const int reason)
   {
   }
 
-//+------------------------------------------------------------------+                                                         //| Expert tick function                                             |
+//+------------------------------------------------------------------+                                                        
+//| Expert tick function                                             |
 //+------------------------------------------------------------------+
-void OnTick()                                                                                                                    {
-   // Verificar condiciones para compra                                                                                           if(Bid > NormalizeDouble(buyLevel, _Digits))
-     {                                                                                                                               OrderSend(Symbol(), OP_BUY, LotSize, Ask, Slippage, 0,Bid + NormalizeDouble(takeprofit*Point,Digits), "", MagicNumber, 0, clrGreen);
+void OnTick()    
+{
+if(OrdersTolal() == 0){
+     balanc = AccountBalance();
+     cierratodo = false;
+  }
+  if (AccountEquity() - balance => ganancia){
+     cierratodo = true;
+  }
+   // Verificar condiciones para compra  
+if(Bid > NormalizeDouble(buyLevel, _Digits))
+     {                                                                                                                               
+OrderSend(Symbol(), OP_BUY, LotSize, Ask, Slippage, 0,Bid + NormalizeDouble(takeprofit*Point,Digits), "", MagicNumber, 0, clrGreen);
       buyLevel = NormalizeDouble(buyLevel + PipsDistance * _Point, _Digits);
       sellLevel = buyLevel - NormalizeDouble(backdistance * _Point, _Digits);
      }                                                                                                                         
-   // Verificar condiciones para venta                                                                                            if(Ask < NormalizeDouble(sellLevel, _Digits))
+   // Verificar condiciones para venta                                                                                            
+if(Ask < NormalizeDouble(sellLevel, _Digits))
      {
       OrderSend(Symbol(), OP_SELL, LotSize, Bid, Slippage, 0, Ask - NormalizeDouble(takeprofit*Point,Digits), "", MagicNumber, 0, clrGreen);
-      sellLevel = NormalizeDouble(sellLevel - PipsDistance * _Point, _Digits);                                                       buyLevel = sellLevel + NormalizeDouble( backdistance * _Point, _Digits);
+      sellLevel = NormalizeDouble(sellLevel - PipsDistance * _Point, _Digits);                                                       
+    buyLevel = sellLevel + NormalizeDouble( backdistance * _Point, _Digits);
      }
 
    // Gestionar stops de posiciones abiertas
