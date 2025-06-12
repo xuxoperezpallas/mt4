@@ -52,7 +52,7 @@ if(OrdersTolal() == 0){
      balanc = AccountBalance();
      cierratodo = false;
   }
-  if (AccountEquity() - balance => ganancia){
+  if (AccountEquity() - balanc >= ganancia){
      cierratodo = true;
   }
    // Verificar condiciones para compra  
@@ -68,16 +68,7 @@ if(Ask < NormalizeDouble(sellLevel, _Digits))
       OrderSend(Symbol(), OP_SELL, LotSize, Bid, Slippage, 0, Ask - NormalizeDouble(takeprofit*Point,Digits), "", MagicNumber, 0, clrGreen);
       sellLevel = NormalizeDouble(sellLevel - PipsDistance * _Point, _Digits);                                                       
     buyLevel = sellLevel + NormalizeDouble( backdistance * _Point, _Digits);
-     }
-
-   // Gestionar stops de posiciones abiertas
-   ManagePositions();
-  }                                                                                                                            
-//+------------------------------------------------------------------+
-//| Función para gestionar posiciones abiertas                       |
-//+------------------------------------------------------------------+
-void ManagePositions()
-  {
+   }
    for(int i = OrdersTotal()-1; i >= 0; i--)
      {
       if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
