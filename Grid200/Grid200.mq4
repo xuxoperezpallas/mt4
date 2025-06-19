@@ -14,8 +14,8 @@ input double LotSize      = 0.01;    // Tamaño del lote
 input int    MagicNumber  = 12345;  // Número mágico
 input int    Slippage     = 3;      // Deslizamiento permitidoint
 input int    backdistance = 600;
-input int    distance     = 800;
-input int    stopreturn     = 200;
+input int    distance     = 1000;
+input int    stopreturn     = 250;
 input int    stoploss     = 3000;
 
 // Variables globales
@@ -61,7 +61,7 @@ void OnTick()
    // Verificar condiciones para compra
    if(Bid > NormalizeDouble(buyLevel, _Digits))
      {
-      OrderSend(Symbol(), OP_BUY, LotSize, Ask, Slippage, Bid - NormalizeDouble(stoploss*Point,Digits), 0, "", MagicNumber, 0, clrGreen);
+      OrderSend(Symbol(), OP_BUY, LotSize, Ask, Slippage, 0, 0, "", MagicNumber, 0, clrGreen);
       buyLevel = NormalizeDouble(buyLevel + PipsDistance * _Point, _Digits);
       sellLevel = NormalizeDouble(buyLevel - backdistance * _Point, _Digits);
      }
@@ -76,7 +76,7 @@ void OnTick()
    // Verificar condiciones para venta
    if(Ask < NormalizeDouble(sellLevel, _Digits))
      {
-      OrderSend(Symbol(), OP_SELL, LotSize, Bid, Slippage, Ask + NormalizeDouble(stoploss*Point,Digits) , 0, "", MagicNumber, 0, clrRed);
+      OrderSend(Symbol(), OP_SELL, LotSize, Bid, Slippage, 0, 0, "", MagicNumber, 0, clrRed);
       sellLevel = NormalizeDouble(sellLevel - PipsDistance * _Point, _Digits);
       buyLevel = NormalizeDouble(sellLevel + backdistance * Point, Digits);
       }
@@ -95,15 +95,15 @@ for(int i = OrdersTotal()-1; i >= 0; i--)
            {
             if(OrderType() == OP_BUY)
               {
-                if(max - NormalizeDouble((top)*Point,Digits) > OrderOpenPrice()){
-                  OrderModify(OrderTicket(), OrderOpenPrice(), max - NormalizeDouble(top*Point,Digits), OrderTakeProfit(), 0, clrBlue);
+                if(OrderOpenPrice() + NormalizeDouble((distance)*Point,Digits) >= Ask){
+                  OrderModify(OrderTicket(), OrderOpenPrice(), OrderOpenPrice() - NormalizeDouble(stopreturn*Point,Digits), 0, 0, clrBlue);
                  }
               }
             else if(OrderType() == OP_SELL)
               {
-               if(min + NormalizeDouble(top * _Point, _Digits) < OrderOpenPrice())
+               if(OrderOpenPrice() - NormalizeDouble(distance* _Point, _Digits) <= Bid)
                   {
-                  OrderModify(OrderTicket(), OrderOpenPrice(), min + NormalizeDouble(top*Point,Digits), OrderTakeProfit(), 0, clrOrange);
+                  OrderModify(OrderTicket(), OrderOpenPrice(), OrderOpenPrice() + NormalizeDouble(stopreturn*Point,Digits), OrderTakeProfit(), 0, clrOrange);
                  }
               }
            }
