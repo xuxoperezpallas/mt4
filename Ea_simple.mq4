@@ -32,53 +32,47 @@ input double ganancia = 100;
 input int max_return = 800;
 input int stop_loss = 800;
 
-int buy_count = 0;
-int sell_count = 0;
-
-double balance = AccountBalance();
 double price_buy = Ask - NormalizeDouble(((int)100)*Point,Digits);
 double price_sell = Bid + NormalizeDouble(((int)100)*Point,Digits);
 
 void OnTick()
   {
+     int buy_orders = 0;
+     int sell_orders = 0;
+     
      // Contar órdenes abiertas
-     buy_count = 0;
-     sell_count = 0;
      for(int i = 0; i < OrdersTotal(); i++){
          if(OrderSelect(i, SELECT_BY_POS, MODE_TRADES)){
              if(OrderSymbol() == Symbol()){
-                 if(OrderType() == OP_BUY) buy_count++;
-                 if(OrderType() == OP_SELL) sell_count++;
+                 if(OrderType() == OP_BUY) buy_orders++;
+                 if(OrderType() == OP_SELL) sell_orders++;
              }
          }
      }
      
-     // Lógica de trading
+     // Lógica para compras
      if(Bid >= price_buy + NormalizeDouble(difpips*Point,Digits)){
-         // Si hay órdenes de venta, abrir 1 más de compra que de venta
-         if(sell_count > 0){
-             for(int j = 0; j <= sell_count; j++){
-                 OrderSend(Symbol(),OP_BUY,lots,Ask,7,Ask - NormalizeDouble(stop_loss*Point,Digits),0,"",12345,0,clrGreen);
-             }
+         // Si hay órdenes de venta, abrir una compra más que ventas
+         if(sell_orders > 0 && buy_orders <= sell_orders){
+             OrderSend(Symbol(),OP_BUY,lots,Ask,7,Ask - NormalizeDouble(stop_loss*Point,Digits),Ask + NormalizeDouble(stop_loss*Point,Digits),"",12345,0,clrGreen);
          }
-         else{
-             // Si no hay órdenes de venta, abrir solo 1 de compra
-             OrderSend(Symbol(),OP_BUY,lots,Ask,7,Ask - NormalizeDouble(stop_loss*Point,Digits),0,"",12345,0,clrGreen);
+         // Si no hay ventas, abrir solo una compra
+         else if(sell_orders == 0 && buy_orders == 0){
+             OrderSend(Symbol(),OP_BUY,lots,Ask,7,Ask - NormalizeDouble(stop_loss*Point,Digits),Ask + NormalizeDouble(stop_loss*Point,Digits),"",12345,0,clrGreen);
          }
          price_buy += NormalizeDouble(difpips*Point,Digits);
          price_sell = price_buy;
      }
-
+     
+     // Lógica para ventas
      if(Ask <= price_sell - NormalizeDouble(difpips*Point,Digits)){
-         // Si hay órdenes de compra, abrir 1 más de venta que de compra
-         if(buy_count > 0){
-             for(int k = 0; k <= buy_count; k++){
-                 OrderSend(Symbol(),OP_SELL,lots,Bid,7,Bid + NormalizeDouble(stop_loss*Point,Digits),0,"",12345,0,clrGreen);
-             }
+         // Si hay órdenes de compra, abrir una venta más que compras
+         if(buy_orders > 0 && sell_orders <= buy_orders){
+             OrderSend(Symbol(),OP_SELL,lots,Bid,7,Bid + NormalizeDouble(stop_loss*Point,Digits),Bid - NormalizeDouble(stop_loss*Point,Digits),"",12345,0,clrGreen);
          }
-         else{
-             // Si no hay órdenes de compra, abrir solo 1 de venta
-             OrderSend(Symbol(),OP_SELL,lots,Bid,7,Bid + NormalizeDouble(stop_loss*Point,Digits),0,"",12345,0,clrGreen);
+         // Si no hay compras, abrir solo una venta
+         else if(buy_orders == 0 && sell_orders == 0){
+             OrderSend(Symbol(),OP_SELL,lots,Bid,7,Bid + NormalizeDouble(stop_loss*Point,Digits),Bid - NormalizeDouble(stop_loss*Point,Digits),"",12345,0,clrGreen);
          }
          price_sell -= NormalizeDouble(difpips*Point,Digits);
          price_buy = price_sell;
