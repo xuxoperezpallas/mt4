@@ -10,7 +10,7 @@
 
 //--- Inputs
 input int    pips_distance = 200;     // Distancia entre órdenes (pips)
-input int    stop_loss_pips = 200;    // Stop Loss y Take Profit (pips)
+input int    stop_loss_pips = 1000;    // Stop Loss y Take Profit (pips)
 input double lot_size = 0.01;         // Volumen por operación
 
 //--- Variables globales
