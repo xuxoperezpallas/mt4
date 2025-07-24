@@ -1,90 +1,92 @@
 //+------------------------------------------------------------------+
-//|                ReinforceTrend_StrictPipsDistance.mq4             |
-//|                        (C) 2023, YourNameHere                    |
-//|                       https://www.yourwebsite.com                |
+//|                                                    Simple_EA.mq4 |
+//|                                                 JesusPerezPallas |
+//|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "YourNameHere"
-#property link      "https://www.yourwebsite.com"
+#property copyright "JesusPerezPallas"
+#property link      "https://www.mql5.com"
 #property version   "1.00"
 #property strict
-
-//--- Inputs
-input int    pips_distance = 200;     // Distancia entre órdenes (pips)
-input int    stop_loss_pips = 1000;    // Stop Loss y Take Profit (pips)
-input double lot_size = 0.01;         // Volumen por operación
-
-//--- Variables globales
-double last_buy_price = 0;    // Último precio donde se abrió una compra
-double last_sell_price = 0;   // Último precio donde se abrió una venta
-bool   trend_direction = 0;   // 0 = indefinido, 1 = alcista, -1 = bajista
-
 //+------------------------------------------------------------------+
-//| Expert initialization function                                  |
+//| Expert initialization function                                   |
 //+------------------------------------------------------------------+
 int OnInit()
-{
-   // Inicializar precios de referencia
-   last_buy_price = Ask;
-   last_sell_price = Bid;
-   
+  {
+//---
+
+//---
    return(INIT_SUCCEEDED);
-}
+  }
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+  {
+//---
 
+  }
 //+------------------------------------------------------------------+
-//| Expert tick function                                            |
+//| Expert tick function                                             |
 //+------------------------------------------------------------------+
+input int difpips = 200;
+input double lots = 0.01;
+input int stop_loss = 1000;
+
+bool max_trade_buy = false;
+bool max_trade_sell = false;
+
+double balance = AccountBalance();
+double price_buy = Ask - NormalizeDouble(((int)100)*Point,Digits);
+double price_sell = Bid + NormalizeDouble(((int)100)*Point,Digits);
+
+int a = 0, b = 0;
+
 void OnTick()
-{
-   //--- Contar órdenes abiertas
-   int buy_orders = 0, sell_orders = 0;
-   
-   for (int i = 0; i < OrdersTotal(); i++)
-   {
-      if (OrderSelect(i, SELECT_BY_POS, MODE_TRADES))
-      {
-         if (OrderSymbol() == Symbol())
-         {
-            if (OrderType() == OP_BUY) buy_orders++;
-            if (OrderType() == OP_SELL) sell_orders++;
+  {
+     if(Bid >= price_buy + NormalizeDouble(difpips*Point,Digits)){
+         OrderSend(Symbol(),OP_BUY,lots,Ask,7,Ask - NormalizeDouble(stop_loss*Point,Digits),Ask + NormalizeDouble(stop_loss*Point,Digits),"",12345,0,clrGreen);
+         if (b >= 2 && max_trade_buy == true){
+             OrderSend(Symbol(),OP_BUY,lots,Ask,7,Ask - NormalizeDouble(stop_loss*Point,Digits),Ask + NormalizeDouble(stop_loss*Point,Digits),"",12345,0,clrGreen);
+             max_trade_buy = false;
+             a++;
          }
+         price_buy += NormalizeDouble(difpips*Point,Digits);
+         price_sell = price_buy;
+         a++;
       }
-   }
 
-   //--- Determinar dirección del trend
-   if (buy_orders > sell_orders) trend_direction = 1;    // Alcista
-   else if (sell_orders > buy_orders) trend_direction = -1; // Bajista
-   else trend_direction = 0; // Neutral
-
-   //--- Lógica de compra (precio sube 200 pips desde última compra)
-   if (Bid >= last_buy_price + NormalizeDouble(pips_distance * Point, Digits))
-   {
-      // Solo abre UNA orden más si el trend es alcista o neutral
-      if (trend_direction >= 0)
-      {
-         OrderSend(
-            Symbol(), OP_BUY, lot_size, Ask, 3,
-            Ask - stop_loss_pips * Point,
-            Ask + stop_loss_pips * Point,
-            "", 0, 0, clrBlue
-         );
-         last_buy_price = Ask; // Actualiza último precio de compra
+      if(Ask <= price_sell - NormalizeDouble(difpips*Point,Digits)){
+         OrderSend(Symbol(),OP_SELL,lots,Bid,7,Bid + NormalizeDouble(stop_loss*Point,Digits),Bid - NormalizeDouble(stop_loss*Point,Digits),"",12345,0,clrGreen);
+         if (a >= 2 && max_trade_sell == true){
+             OrderSend(Symbol(),OP_SELL,lots,Bid,7,Bid + NormalizeDouble(stop_loss*Point,Digits),Bid - NormalizeDouble(stop_loss*Point,Digits),"",12345,0,clrGreen);
+             max_trade_sell = false;
+             b++;
+         }
+         price_sell -= NormalizeDouble(difpips*Point,Digits);
+         price_buy = price_sell;
       }
-   }
+ int e = 0, f = 0, c = 0, d = 0;
+      for(int i = 1; i <= OrdersTotal(); i++){
+          if (OrderSelect(i,SELECT_BY_POS, MODE_TRADES)){
+          if (OrderSymbol() == Symbol() && OrderType() == OP_BUY){
+              if (!(OrderOpenPrice() <= Ask)){
+                  c++;
+              }
+          d++;
+          }
+          if (d == 0 || c != d) max_trade_sell = true;
 
-   //--- Lógica de venta (precio baja 200 pips desde última venta)
-   if (Ask <= last_sell_price - NormalizeDouble(pips_distance * Point, Digits))
-   {
-      // Solo abre UNA orden más si el trend es bajista o neutral
-      if (trend_direction <= 0)
-      {
-         OrderSend(
-            Symbol(), OP_SELL, lot_size, Bid, 3,
-            Bid + stop_loss_pips * Point,
-            Bid - stop_loss_pips * Point,
-            "", 0, 0, clrRed
-         );
-         last_sell_price = Bid; // Actualiza último precio de venta
+          if (OrderSymbol() == Symbol() && OrderType() == OP_SELL){
+              if (!(OrderOpenPrice() >= Bid)){
+                  e++;
+              }
+          f++;
+          }
+          if (f == 0 || e != f) max_trade_buy = true;
+          }
       }
-   }
-}
+
+
+
+  }
 //+------------------------------------------------------------------+
